@@ -205,20 +205,23 @@ public class PubChemXMLDoc {
 					String strValue = xrefValue.toString();
 					if (xrefType.equals("source web page")) // this first one is the only string
 						xrefData.addElement("PC-XRefData_dburl").addText(strValue);
-					else if (xrefType.equals("aid")) // all these others are really numbers
-						xrefData.addElement("PC-XRefData_aid").addText(strValue);
-					else if (xrefType.equals("protein"))
-						xrefData.addElement("PC-XRefData_protein-gi").addText(strValue);
-					else if (xrefType.equals("gene"))
-						xrefData.addElement("PC-XRefData_gene").addText(strValue);
-					else if (xrefType.equals("taxonomy"))
-						xrefData.addElement("PC-XRefData_taxonomy").addText(strValue);
-					else if (xrefType.equals("omim"))
-						xrefData.addElement("PC-XRefData_mim").addText(strValue);
-					else if (xrefType.equals("pmid"))
-						xrefData.addElement("PC-XRefData_pmid").addText(strValue);
-					else if (xrefType.equals("sid"))
-						xrefData.addElement("PC-XRefData_sid").addText(strValue);
+					else {
+						Integer id = Integer.parseInt(strValue);
+						if (xrefType.equals("aid")) // all these others are really numbers
+							xrefData.addElement("PC-XRefData_aid").addText(id.toString());
+						else if (xrefType.equals("protein"))
+							xrefData.addElement("PC-XRefData_protein-gi").addText(id.toString());
+						else if (xrefType.equals("gene"))
+							xrefData.addElement("PC-XRefData_gene").addText(id.toString());
+						else if (xrefType.equals("taxonomy"))
+							xrefData.addElement("PC-XRefData_taxonomy").addText(id.toString());
+						else if (xrefType.equals("omim"))
+							xrefData.addElement("PC-XRefData_mim").addText(id.toString());
+						else if (xrefType.equals("pmid"))
+							xrefData.addElement("PC-XRefData_pmid").addText(id.toString());
+						else if (xrefType.equals("sid"))
+							xrefData.addElement("PC-XRefData_sid").addText(id.toString());
+					}
 				}
 				String comment = xref.getXrefComment();
 				if (null != comment)
