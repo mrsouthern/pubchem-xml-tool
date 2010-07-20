@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: dependency1.jar dependency2.jar
+Main-Class: edu.scripps.fl.pubchem.xml.SwingGUI
+
+
