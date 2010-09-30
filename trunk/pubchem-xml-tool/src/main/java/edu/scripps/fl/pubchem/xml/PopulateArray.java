@@ -15,7 +15,7 @@
  */
 package edu.scripps.fl.pubchem.xml;
 
-import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +28,7 @@ import org.apache.commons.collections.map.CaseInsensitiveMap;
 import com.googlecode.exceltablemodel.ExcelTableModel;
 
 import edu.scripps.fl.pubchem.xml.model.Panel;
+import edu.scripps.fl.pubchem.xml.model.PubChemAssay;
 import edu.scripps.fl.pubchem.xml.model.ResultTid;
 import edu.scripps.fl.pubchem.xml.model.Xref;
 
@@ -35,6 +36,28 @@ import edu.scripps.fl.pubchem.xml.model.Xref;
  * @author S Canny (scanny at scripps dot edu)
  */
 public class PopulateArray {
+
+	public PubChemAssay getAssayValues(ExcelTableModel tableModel) throws Exception {
+		tableModel.setSheet("Assay");
+		tableModel.setValueType(ExcelTableModel.ValueType.ACTUAL);
+		tableModel.setUseFirstRowAsColumnHeadings(false);
+		String[] sections = new String[] { "aid", "grantNumber", "projectCategory", "holdUntilDate", "activityOutcomeMethod", "source",
+				"description", "protocol", "comment" };
+		PubChemAssay assay = new PubChemAssay();
+		for (int row = 0; row < tableModel.getRowCount(); row++) {
+			String section = tableModel.getValueAt(row, 0).toString();
+			section = section.replaceAll("[-\\s+]", "");
+			for (String ss : sections) {
+				if (ss.equalsIgnoreCase(section) && tableModel.getValueAt(row, 1) != null)
+					BeanUtils.setProperty(assay, ss, tableModel.getValueAt(row, 1));
+			}
+		}
+		
+//		tableModel.setUseFirstRowAsColumnHeadings(true);
+//		assay.setXrefs(getXrefs(tableModel));
+//		assay.replaceCitationsInDescription(assay.getDescription(), assay.citationString(false));
+		return assay;
+	}
 
 	public Map<String, Integer> getColumnsMap(TableModel tableModel) {
 		Map<String, Integer> map = new CaseInsensitiveMap();
@@ -48,96 +71,97 @@ public class PopulateArray {
 		return map;
 	}
 
-	public List<Panel> getPanelValues(File file) throws Exception {
-		ExcelTableModel model = ExcelTableModel.load(file, true);
-		model.setSheet("Panel");
-		model.setValueType(ExcelTableModel.ValueType.ACTUAL);
-		return getPanelValues(model);
-	}
-
-	public List<Panel> getPanelValues(TableModel tableModel) throws Exception {
+	public List<Panel> getPanelValues(ExcelTableModel tableModel) throws IllegalAccessException, InvocationTargetException {
+		tableModel.setSheet("Panel");
+		tableModel.setValueType(ExcelTableModel.ValueType.ACTUAL);
+		tableModel.setUseFirstRowAsColumnHeadings(true);
 		Map<String, Integer> map = getColumnsMap(tableModel);
-		List<Panel> panelValues = getPanelValues(tableModel, map, new String[] { "panelName", "panelTargetGi", "panelProteinName",
+		List<Panel> panelValues = getPanelValues(tableModel, map, new String[] { "panelName", "panelTargetGi", "panelTargetName",
 				"panelGene", "panelTargetType", "panelTaxonomy" });
 		return panelValues;
 	}
-
-	public List<Panel> getPanelValues(TableModel tableModel, Map<String, Integer> map, String[] properties) throws Exception {
+	
+	public List<Panel> getPanelValues(ExcelTableModel tableModel, Map<String, Integer> map, String[] properties) throws IllegalAccessException, InvocationTargetException {
 		List<Panel> panelValues = new ArrayList<Panel>();
 		for (int row = 0; row < tableModel.getRowCount(); row++) {
+			if(checkIfRowBlank(tableModel, row) == false){
 			Panel panelValue = new Panel();
-
 			for (String property : properties) {
 				Object obj = tableModel.getValueAt(row, map.get(property));
 				if (obj != null && !"".equals(obj))
 					BeanUtils.setProperty(panelValue, property, obj);
-
 			}
 			panelValues.add(panelValue);
-
+			}
 		}
 		return panelValues;
 	}
 
-	public List<ResultTid> getTidValues(File file) throws Exception {
-		ExcelTableModel model = ExcelTableModel.load(file, true);
-		model.setSheet("TIDs");
-		model.setValueType(ExcelTableModel.ValueType.ACTUAL);
-		return getTidValues(model);
-	}
-
-	public List<ResultTid> getTidValues(TableModel tableModel) throws Exception {
+	public List<ResultTid> getTidValues(ExcelTableModel tableModel) throws IllegalAccessException, InvocationTargetException{
+		tableModel.setSheet("TIDs");
+		tableModel.setValueType(ExcelTableModel.ValueType.ACTUAL);
+		tableModel.setUseFirstRowAsColumnHeadings(true);
 		Map<String, Integer> map = getColumnsMap(tableModel);
 		List<ResultTid> tidValues = getTidValues(tableModel, map, new String[] { "tidName", "tidDescription", "tidType", "tidUnit",
 				"tidConcentration", "tidPlot", "tidPanelNum", "tidPanelReadout" });
 		return tidValues;
 	}
 
-	public List<ResultTid> getTidValues(TableModel tableModel, Map<String, Integer> map, String[] properties) throws Exception {
+	public List<ResultTid> getTidValues(ExcelTableModel tableModel, Map<String, Integer> map, String[] properties) throws IllegalAccessException, InvocationTargetException{
 		List<ResultTid> tidValues = new ArrayList<ResultTid>();
 		for (int row = 0; row < tableModel.getRowCount(); row++) {
-			ResultTid tidValue = new ResultTid();
-
-			for (String property : properties) {
-				Object obj = tableModel.getValueAt(row, map.get(property));
-				if (obj != null && !"".equals(obj))
-					BeanUtils.setProperty(tidValue, property, obj);
-
+			if (checkIfRowBlank(tableModel, row) == false) {
+				ResultTid tidValue = new ResultTid();
+				for (String property : properties) {
+					Object obj = tableModel.getValueAt(row, map.get(property));
+					if (obj != null && !"".equals(obj))
+						BeanUtils.setProperty(tidValue, property, obj);
+				}
+				tidValues.add(tidValue);
 			}
-			tidValues.add(tidValue);
-
 		}
 		return tidValues;
 	}
 
-	public List<Xref> getXrefs(File file) throws Exception {
-		ExcelTableModel model = ExcelTableModel.load(file, true);
-		model.setSheet("Xrefs");
-		model.setValueType(ExcelTableModel.ValueType.ACTUAL);
-		return getXrefs(model);
-	}
-
-	public List<Xref> getXrefs(TableModel tableModel) throws Exception {
+	public List<Xref> getXrefs(ExcelTableModel tableModel) throws IllegalAccessException, InvocationTargetException {
+		tableModel.setSheet("Xrefs");
+		tableModel.setValueType(ExcelTableModel.ValueType.ACTUAL);
+		tableModel.setUseFirstRowAsColumnHeadings(true);
+		
 		Map<String, Integer> map = getColumnsMap(tableModel);
-		List<Xref> xrefs = getXrefs(tableModel, map, new String[] { "xrefType", "xrefValue", "xrefComment" });
+		List<Xref> xrefs = getXrefs(tableModel, map, new String[] { "xrefType", "xrefValue", "xrefComment", "isTarget" });
 		return xrefs;
 	}
 
-	public List<Xref> getXrefs(TableModel tableModel, Map<String, Integer> map, String[] properties) throws Exception {
+	public List<Xref> getXrefs(ExcelTableModel tableModel, Map<String, Integer> map, String[] properties) throws IllegalAccessException, InvocationTargetException {
 		List<Xref> xrefs = new ArrayList<Xref>();
 		for (int row = 0; row < tableModel.getRowCount(); row++) {
-			Xref xref = new Xref();
-
-			for (String property : properties) {
-				Object obj = tableModel.getValueAt(row, map.get(property));
-				if (obj != null && !"".equals(obj))
-					BeanUtils.setProperty(xref, property, obj);
-
+			if (checkIfRowBlank(tableModel, row) == false) {
+				Xref xref = new Xref();
+				for (String property : properties) {
+					Object obj = tableModel.getValueAt(row, map.get(property));
+					if (obj != null && !"".equals(obj))
+						BeanUtils.setProperty(xref, property, obj);
+					if(property.equals("isTarget") && obj == null)
+						BeanUtils.setProperty(xref, "isTarget", false);
+				}
+				xrefs.add(xref);
 			}
-			xrefs.add(xref);
-
 		}
 		return xrefs;
+	}
+	
+	public boolean checkIfRowBlank(ExcelTableModel model, int row){
+		boolean bool = false;
+		Integer count = 0;
+		for(int ii = 0; ii < model.getColumnCount(); ii++){
+			Object value = model.getCellValueAt(row, ii);
+			if(value == null || value == "")
+				count = count + 1;
+		}
+		if(count == model.getColumnCount())
+			bool = true;
+		return bool;
 	}
 
 }

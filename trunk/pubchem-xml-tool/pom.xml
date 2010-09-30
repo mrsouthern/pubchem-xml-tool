@@ -2,8 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.scripps</groupId>
-	<artifactId>PubChemXMLCreator</artifactId>
-	<version>20100720</version>
+	<artifactId>pubchem-xml-tool</artifactId>
+	<version>20100922</version>
+	<packaging>jar</packaging>
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<pluginManagement>
@@ -82,6 +83,16 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1-beta1</version>
+		</dependency>
+		<dependency> <!-- used by httpclient -->
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
 			<groupId>jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>3.7.2</version>
@@ -90,6 +101,21 @@
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 			<version>1.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.4.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-vfs</groupId>
+			<artifactId>commons-vfs</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.scripps</groupId>
+			<artifactId>pubchem-deposition</artifactId>
+			<version>20100825</version>
 		</dependency>
 	</dependencies>
 	<properties>

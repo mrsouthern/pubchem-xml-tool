@@ -1,0 +1,35 @@
+PubChem XML Creator Tests:
+1.	Type in a known "good" AID number in Extract PubChem XML tab and press Extract button.
+	Expected Outcome: A temporary excel file with appropriate TID, Panel, and Xref information.
+	
+2.	Type in a known "bad" AID number in Extract PubChem XML tab and press Extract button.
+	Expected Outcome: An error message to pop up.
+	
+3.	Save extracted excel spreadsheet and use it to create a pubchem xml.  Search for it using the file opener.
+	Expected Outcome: Excel Workbook text field shows location of chosen excel workbook and output xml 
+	text field automatically fills in the same name and location as the excel workbook.  Also once the Create
+	button is pressed the xml should pop up in an internet explorer window.
+	
+4.	Upload xml into PubChem.
+	Expected Outcome: xml file uploads.
+	
+5.	Click on Example Excel File.
+	Expected Outcome: Cursor turns into a hand. Excel window pops up with an temporary example excel file.
+	
+6.	Click on Excel Template and save file not using a ".xlsx".
+	Expected Outcome: Cursor turns into a hand. Save window pops up.  ".xlsx" is assumed and file saves.  Once saved an Excel window pops up with a
+	blank template.  Excel workbook and output xml text fields are filled in accordingly.
+	
+7.	Put in a file that does not exist in excel workbook.
+	Expected Outcome: Error message pops up.
+	
+8.	Choose a non gzipped xml file and put in Extractor.
+	Expected Outcome: File extracts and same outcome as test 1.
+
+9.	Enter a file that doesn't exist into the Extractor.
+	Expected Outcome: Error message pops up.
+	
+10.	Use an xml template that includes a description.  Put new tid, panel, xref information into it.
+	Expected Outcome: Any current tid, panel, xref information is replaced if Excel template is filled in with
+	information for each part. XML uploads into PubChem.
+	

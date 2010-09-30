@@ -16,23 +16,44 @@
 package edu.scripps.fl.pubchem.xml;
 
 import java.io.File;
+import java.io.InputStream;
 
 import org.dom4j.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.googlecode.exceltablemodel.ExcelTableModel;
+
+import edu.scripps.fl.pubchem.PubChemAssayFactory;
+import edu.scripps.fl.pubchem.xml.model.*;
+
 
 /*
  * @author S Canny (scanny at scripps dot edu)
  */
 public class PubChemXMLCreatorController {
-	
-	public void createPubChemXML(File fileTemplate, File fileExcel, File fileXMLOutput) throws Exception {
+
+	private static final Logger logger = LoggerFactory.getLogger(PubChemXMLCreatorController.class);
+
+	public PubChemAssay createPubChemXML(InputStream fileTemplate, File fileExcel, File fileXMLOutput) throws Exception {
 		PubChemXMLDoc xmldoc = new PubChemXMLDoc();
-		
-		Document doc = xmldoc.loadPubChemXML(fileTemplate);
 		PopulateArray array = new PopulateArray();
-		xmldoc.buildTidDocument(doc, array.getTidValues(fileExcel));
-		xmldoc.buildXrefDocument(doc, array.getXrefs(fileExcel));
-		xmldoc.buildPanelDocument(doc, array.getPanelValues(fileExcel));
+		Document doc;
+		doc = xmldoc.loadPubChemXML(fileTemplate);
+		ExcelTableModel model = ExcelTableModel.load(fileExcel, true);
 		
+		PubChemAssay assay = array.getAssayValues(model);
+		PubChemAssayFactory factory = new PubChemAssayFactory();
+		factory.setUpPubChemAssay(assay, array.getTidValues(model), array.getXrefs(model), array.getPanelValues(model));
+		factory.placeCitationsInDescription(assay, false);
+		
+		new AssayXML().buildAssayDocument(doc, assay);
+		new ResultTidXML().buildTidDocument(doc, assay.getResultTids());
+		new XrefXML().buildXrefDocument(doc, assay);
+		new PanelXML().buildPanelDocument(doc, assay.getPanels());
+
 		xmldoc.write(doc, fileXMLOutput);
+		
+		return assay;
 	}
 }
