@@ -21,8 +21,11 @@ package edu.scripps.fl.pubchem.xml.model;
 public class Xref {
 
 	private String xrefType;
+	private Integer xrefTargetValue;
+	private String xrefTargetType;
 	private Object xrefValue;
 	private String xrefComment;
+	private Boolean isTarget;
 	
 	public Object getXrefValue() {
 		return xrefValue;
@@ -38,6 +41,11 @@ public class Xref {
 
 	public void setXrefType(String xrefType) {
 		this.xrefType = xrefType;
+		
+		if(xrefType.equalsIgnoreCase("protein")){
+			this.xrefTargetValue = 1;
+			this.xrefTargetType = "protein";
+		}
 	}
 
 	public String getXrefComment() {
@@ -47,5 +55,60 @@ public class Xref {
 	public void setXrefComment(String xrefComment) {
 		this.xrefComment = xrefComment;
 	}
+
+	public void setIsTarget(Boolean isTarget) {
+		this.isTarget = isTarget;
+	}
+
+	public Boolean getIsTarget() {
+		return isTarget;
+	}
+
+	public void setXrefTargetValue(Integer xrefTypeValue) {
+		this.xrefTargetValue = xrefTypeValue;
+		if(this.xrefTargetValue == 1)
+			this.xrefType = "Protein";
+		else if(this.xrefTargetValue == 2 | this.xrefTargetValue == 3)
+			this.xrefType = "Nucleotide";
+	}
+
+	public Integer getXrefTargetValue() {
+		return xrefTargetValue;
+	}
+
+	public void setXrefTargetType(String xrefTargetType) {
+		this.xrefTargetType = xrefTargetType;
+	}
+
+	public String getXrefTargetType() {
+		return xrefTargetType;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((xrefValue == null) ? 0 : xrefValue.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Xref other = (Xref) obj;
+		if (xrefValue == null) {
+			if (other.xrefValue != null)
+				return false;
+		} else if (!xrefValue.equals(other.xrefValue))
+			return false;
+		return true;
+	}
+
+
 
 }

@@ -30,16 +30,19 @@ public class AboutGUI extends JPanel {
 	
 	public AboutGUI(){
 		
+		setSize(640, 230);
 		setLayout(new GridBagLayout());
 		
 		JTextPane jtpAbout = gc.createJTextPane();
 		JTextPane jtpLogo = new JTextPane();
 		jtpLogo.insertIcon(gc.loadIcon("scripps.png"));
 		jtpLogo.setOpaque(false);
+		jtpLogo.setAlignmentX(CENTER_ALIGNMENT);
+		jtpLogo.setAlignmentY(TOP_ALIGNMENT);
 		
-		GridBagConstraints gbc01 = gc.createGridBagConstraint(0, 0, jtpLogo, "line end");
+		GridBagConstraints gbc01 = gc.createGridBagConstraint(0, 0, jtpLogo, "center");
 		add(jtpLogo, gbc01);
-		GridBagConstraints gbc02 = gc.createGridBagConstraint(1, 0, jtpAbout, "line start");
+		GridBagConstraints gbc02 = gc.createGridBagConstraint(1, 0, jtpAbout, "center");
 		add(jtpAbout, gbc02);
 		
 	}

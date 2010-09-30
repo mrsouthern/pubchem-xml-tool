@@ -26,8 +26,8 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
 import javax.swing.BorderFactory;
@@ -37,14 +37,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.scripps.fl.pubchem.PubChemDeposition;
 import edu.scripps.fl.pubchem.PubChemFactory;
-import edu.scripps.fl.pubchem.xml.XMLExtractorController;
+import edu.scripps.fl.pubchem.report.ReportController;
+import edu.scripps.fl.pubchem.xml.extract.XMLExtractorController;
 
 /*
  * @author S Canny (scanny at scripps dot edu)
@@ -53,10 +54,11 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 	
 	private JLabel jlbFileXML;
 	private JTextField jtfFileXML;
-	private JButton jbnFileXML, jbnRunExtractor;
-	private GridBagConstraints gbc01, gbc02, gbc03, gbc04;
+	private JButton jbnFileXML, jbnRunExtractor, jbnCreateReport;
+	private GridBagConstraints gbc01, gbc02, gbc03, gbc04, gbc05;
 	private String aidText = "If you type in an AID number, the AID will be fetched directly from PubChem.";
 	private GUIComponent gc = new GUIComponent();
+	private PubChemDeposition pcDep = new PubChemDeposition();
 	private static final Logger log = LoggerFactory.getLogger(PubChemXMLExtractorGUI.class);
 	
 	public PubChemXMLExtractorGUI() {
@@ -71,6 +73,7 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 		add(jtfFileXML, gbc02);
 		add(jbnFileXML, gbc03);
 		add(jbnRunExtractor, gbc04);
+		add(jbnCreateReport, gbc05);
 		addMouseListener(this);
 	}
 	
@@ -81,51 +84,79 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 		jbnFileXML = gc.createJButton("Open16",
 				"Choose a PubChem xml file to extract TID, Panel, and Xref information from or type in a PubChem AID number.", "icon");
 		jbnRunExtractor = gc.createJButton("Extract PubChem XML", "Run the extractor program.", "text");
-
+		jbnCreateReport = gc.createJButton("Create Report", "Create report from XML file.", "text");
+		
 		jbnFileXML.addActionListener(this);
 		jbnRunExtractor.addActionListener(this);
+		jbnCreateReport.addActionListener(this);
 		
 		gbc01 = gc.createGridBagConstraint(0, 0, jlbFileXML, "line start");
 		gbc02 = gc.createGridBagConstraint(1, 0, jtfFileXML, "line start");
 		gbc03 = gc.createGridBagConstraint(2, 0, jbnFileXML, "center");
-		gbc04 = gc.createGridBagConstraint(1, 2, jbnRunExtractor, "center");
+		gbc04 = gc.createGridBagConstraint(1, 2, jbnRunExtractor, "line start");
+		gbc05 = gc.createGridBagConstraint(1, 2, jbnCreateReport, "line end");
 	}
 	
-
 	public void actionPerformed(ActionEvent e) {
 		try{
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			if (e.getSource() == jbnFileXML)
-				gc.fileChooser(jtfFileXML, ".xml", "open");
+				gc.fileChooser(jtfFileXML, "", "open");
 			else if (e.getSource() == jbnRunExtractor) {
-				String xml = jtfFileXML.getText();
-				InputStream is;
-				if(FilenameUtils.getExtension(xml).equals("xml")){
-					File fileXMLInput = new File(xml);
-					if( ! fileXMLInput.exists() )
-						throw new Exception("File does not exist: " + fileXMLInput);
-					is = new FileInputStream(fileXMLInput);
+				File fileExcelOutput = extract();
+				if(fileExcelOutput != null){
+					log.info("Opening excel file through Desktop: " + fileExcelOutput);
+					Desktop.getDesktop().open(fileExcelOutput);
 				}
-				else{
-					URL xmlURL = PubChemFactory.getInstance().getPubChemXmlDescURL(Long.parseLong(xml));
-					File temp = File.createTempFile("PubChemXML", "xml");
-					temp.deleteOnExit();
-					FileUtils.copyURLToFile(xmlURL, temp);
-					is = new GZIPInputStream(new FileInputStream(temp));
+			}
+			else if (e.getSource() == jbnCreateReport){
+				File fileExcelOutput = extract();
+				if(fileExcelOutput != null){
+					log.info("Opening report through Desktop: " + fileExcelOutput);
+					File filePDFOutput = File.createTempFile("PubChem_PDF_Report", ".pdf");
+					File fileWordOutput	= File.createTempFile("PubChem_Word_Report", ".docx");
+					filePDFOutput.deleteOnExit();
+					fileWordOutput.deleteOnExit();
+					new ReportController().createReport(pcDep, fileExcelOutput, filePDFOutput, fileWordOutput);
+					Desktop.getDesktop().open(filePDFOutput);
+					Desktop.getDesktop().open(fileWordOutput);
 				}
-				File fileExcelOutput = File.createTempFile("pubchem", ".xlsx");
-				fileExcelOutput.deleteOnExit();
-				new XMLExtractorController().extractPubChemXML(is, new FileOutputStream(fileExcelOutput));
-				Desktop.getDesktop().open(fileExcelOutput);
 			}
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
-		catch(Exception ex){
-			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			log.error(ex.getMessage(), ex);
-			JOptionPane.showMessageDialog(this, ex.getMessage(), SwingGUI.APP_NAME, JOptionPane.ERROR_MESSAGE);
+		catch(Throwable throwable){
+			SwingGUI.handleError(this, throwable);
 		}
 		
+	}
+	
+	
+	
+	public File extract() throws Exception{
+		String xml = jtfFileXML.getText();
+		InputStream is = null;
+		if(FilenameUtils.getExtension(xml).equals("xml")){
+			is = new FileInputStream(new File(xml));
+			xml = FilenameUtils.getBaseName(xml);
+		}
+		else if(FilenameUtils.getExtension(xml).equals("gz")){
+			is = new GZIPInputStream(new FileInputStream(new File(xml)));
+			xml = FilenameUtils.getBaseName(xml);
+		}
+		else{
+			Integer aid = Integer.parseInt(xml);
+			is = PubChemFactory.getInstance().getPubChemXmlDesc(aid);
+			if(is == null)
+				is = pcDep.getPubChemAID(aid);
+			}
+		
+		File fileExcelOutput= null;
+		
+		fileExcelOutput = File.createTempFile("pubchem_" + xml + "_", ".xlsx");
+		fileExcelOutput.deleteOnExit();
+		new XMLExtractorController().extractPubChemXML(is, new FileOutputStream(fileExcelOutput));
+
+		return fileExcelOutput;
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -135,9 +166,8 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 						jtfFileXML.setText("");
 				}
 				if(e.getSource() == this){
-					if(jtfFileXML.getText().equals("")){
+					if(jtfFileXML.getText().equals(""))
 						jtfFileXML.setText(aidText);
-					}
 				}
 			}
 	}

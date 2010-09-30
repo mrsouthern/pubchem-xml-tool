@@ -16,8 +16,13 @@
 package edu.scripps.fl.pubchem.xmltool.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
@@ -44,6 +49,8 @@ public class SwingGUI extends JPanel {
 	public SwingGUI() {
 		super(new BorderLayout());
 		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.setAlignmentX(CENTER_ALIGNMENT);
+		tabbedPane.setAlignmentY(CENTER_ALIGNMENT);
 		
 		JPanel xmlCreator = new JPanel();
 		xmlCreator.add(new PubChemXMLCreatorGUI());
@@ -60,6 +67,24 @@ public class SwingGUI extends JPanel {
 		add(tabbedPane, BorderLayout.CENTER);
 	}
 	
+	public static void handleError(JComponent comp, Throwable throwable) {
+		comp.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		String msg = "";
+		if(null != throwable.getCause() )
+			msg = throwable.getCause().getMessage();
+		else if(throwable instanceof FileNotFoundException)
+			msg = "Could not find file: " + throwable.getMessage();
+		else if(throwable instanceof IOException)
+			msg = "Error with file:" + throwable.getMessage();
+		else{
+			if(throwable != null)
+				msg = throwable.getMessage();
+		}
+		throwable.printStackTrace();
+		log.error(msg, throwable);
+		JOptionPane.showMessageDialog(comp, msg, SwingGUI.APP_NAME, JOptionPane.ERROR_MESSAGE);
+	}
+	
 	public static void createGUI() {
 		
 		JFrame frame = new JFrame();
@@ -68,7 +93,7 @@ public class SwingGUI extends JPanel {
 		SwingGUI newContentPane = new SwingGUI();
 		newContentPane.setOpaque(true);
 		frame.setContentPane(newContentPane);
-		frame.setSize(800, 300);
+		frame.setSize(780, 300);
 		frame.setVisible(true);
 		frame.setTitle(APP_NAME);
 		frame.setResizable(true);

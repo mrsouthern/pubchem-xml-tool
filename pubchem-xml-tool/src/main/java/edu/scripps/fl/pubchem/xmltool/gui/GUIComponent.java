@@ -46,6 +46,7 @@ import org.slf4j.LoggerFactory;
  * @author S Canny (scanny at scripps dot edu)
  */
 public class GUIComponent {
+		
 	
 	private JFileChooser jfcFiles;
 	
@@ -159,16 +160,22 @@ public class GUIComponent {
 		public JTextPane createJTextPane(){
 			String newline = "\n";
 			String[] description =
-				{ 	" PubChem XML Tool" + newline,
-					"By: S. Canny and M. Southern" + newline,
+				{ 	"PubChem XML Tool (Version: September 22nd, 2010)" + newline,
+					"By: S. Canny (scanny@scripps.edu) and M. Southern (southern@scripps.edu)" + newline,
 					"" + newline,
-					"PubChem XML Tool has two main functions:" + newline,
-					"1. Create a PubChem XML that can include TIDs, Xrefs,and Panel information." + newline,
-					"2. Extract TID, Xref, and Panel information from a PubChem XML." + newline,
+					"PubChem XML Tool main functions:" + newline,
+					"1. Create a PubChem XML that can include Assay, Result TIDs, Xrefs,and Panel information." + newline,
+					"2. Extract Assay, Result TID, Xref, and Panel information from a PubChem XML." + newline,
+					"3. Create a report from an Excel workbook." + newline,
 					"" + newline,
-					"					(c) 2010, The Scripps Research Institute- Florida"
+					"Other features:" + newline,
+					"1. Automatically adds reference section to description of PubChem XML or a report if placeholder is used." + newline,
+					"2. Checks proteins, genes, omims, and taxonomies for connections when creating PubChem XML or a report." + newline,
+					"3. Can retrieve on-hold and newly deposited assays from deposition system to extract or create report." + newline,
+					"" + newline,
+					"\t\t\t(c) 2010, The Scripps Research Institute- Florida"
 				};
-			String[] styles = { "bold", "regular", "regular", "regular", "regular", "regular", "regular", "right" };
+			String[] styles = { "bold", "regular", "regular", "regular", "regular", "regular", "regular", "regular", "regular","regular",  "regular", "regular", "regular", "regular", "right" };
 			
 			JTextPane jtp = new JTextPane();
 			StyledDocument doc = jtp.getStyledDocument();
@@ -183,18 +190,23 @@ public class GUIComponent {
 			}
 			jtp.setOpaque(false);
 			jtp.setEditable(false);
-			jtp.setPreferredSize(new Dimension(700, 150));
+			jtp.setPreferredSize(new Dimension(640, 230));
 
 			return jtp;
 		}
 		
 		public File fileChooser(JTextField jtf, String ext, String openOrSave){
 			jfcFiles = new JFileChooser();
+			if(! ext.equals(""))
+				jfcFiles.addChoosableFileFilter(new MyFileFilter(ext));
+			jfcFiles.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);	
+			
 			int state;
 			if(openOrSave.equals("open"))
 				state = jfcFiles.showOpenDialog(null);
 			else
 				state = jfcFiles.showSaveDialog(null);
+			
 			if(state == JFileChooser.APPROVE_OPTION){
 				File file = checkFileExtension(ext);
 				jtf.setText(file.getPath());
@@ -211,5 +223,6 @@ public class GUIComponent {
 		    URL imgUrl = GUIComponent.class.getClassLoader().getResource(name);
 		    	return new ImageIcon(imgUrl);
 		}
+
 
 }

@@ -52,14 +52,25 @@
 		</filter>
 	</appender>
 
-
+	<category name="httpclient.wire">
+		<priority value="INFO" />
+	</category>
+	<category name="org.apache.http">
+		<priority value="ERROR" />
+	</category>
 	<category name="org.apache.commons">
 		<priority value="INFO" />
+	</category>
+	<category name="org.apache.commons.httpclient">
+		<priority value="ERROR" />
 	</category>
 	<category name="org.apache.axis2">
 		<priority value="INFO" />
 	</category>
 	<category name="org.apache.axiom">
+		<priority value="INFO" />
+	</category>
+	<category name="edu.scripps.fl.pubchem">
 		<priority value="INFO" />
 	</category>
 	<category name="edu.scripps.fl.pubchem.xml.SwingGUI">
@@ -73,6 +84,9 @@
 	</category>
 	<category name="edu.scripps.fl.pubchem.xmlextractor">
 		<priority value="DEBUG" />
+	</category>
+	<category name="net.sf.jasperreports">
+		<priority value="ERROR" />
 	</category>
 	
 	

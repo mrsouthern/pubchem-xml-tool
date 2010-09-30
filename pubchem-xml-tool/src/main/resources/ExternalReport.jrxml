@@ -361,12 +361,8 @@
 	<title>
 		<band height="69">
 			<image>
-				<reportElement x="39" y="0" width="95" height="59"/>
-				<imageExpression class="java.lang.String"><![CDATA[".\\logo.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="357" y="0" width="180" height="59"/>
-				<imageExpression class="java.lang.String"><![CDATA[".\\Screening Center Logo.png"]]></imageExpression>
+				<reportElement x="35" y="0" width="100" height="59"/>
+				<imageExpression class="java.lang.String"><![CDATA[".\\YourLogoHere.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

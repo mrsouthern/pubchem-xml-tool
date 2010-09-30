@@ -15,8 +15,12 @@
  */
 package edu.scripps.fl.pubchem;
 
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
 
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.VFS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +34,7 @@ public class PubChemFactory {
 	private static final String ftpUser = "anonymous";
 	private static final String ftpPass = "scripps.edu";
 	private static final String ftpHost = "ftp.ncbi.nlm.nih.gov";
-	private static final String pubchemBioAssayUrlFormat = "ftp://%s:%s@ftp.ncbi.nlm.nih.gov/pubchem/Bioassay/CSV/%s/%s/%s%s";
+	private static final String pubchemBioAssayUrlFormat = "ftp://%s:%s@ftp.ncbi.nlm.nih.gov/pubchem/Bioassay/CSV/%s/%s.zip";
 
 	private static PubChemFactory instance;
 
@@ -51,55 +55,44 @@ public class PubChemFactory {
 		}
 		return instance;
 	}
-	 
-		
-	public static String getAIDFolder(long aid) {
-		long low = nextLowestMultiple(aid, 5000);
-		return String.format("%d_%d", low, low + 4999);
+
+	protected static String getAIDArchive(long aid) {
+		long low = nextLowestMultiple(aid, 1000);
+		return String.format("%07d_%07d", low + 1, low + 1000);
 	}
 
 	// http://mindprod.com/jgloss/round.html
 	// rounding m down to multiple of n
-	private static long nextLowestMultiple(long m, long n) {
+	protected static long nextLowestMultiple(long m, long n) {
 		long floor = m / n * n;
 		return floor;
 	}
-	
-	public URL getXMLDescURL(URL parent, int aid) {
-		try {
-			return new URL(parent.getProtocol(), parent.getHost(), parent.getPort(), String.format("%s/%s/%s.descr.xml.gz", parent.getPath(), getAIDFolder(aid), aid));
-		}
-		catch(Exception ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-	
-	public URL getCsvDataURL(URL parent, int aid) {
-		try {
-			return new URL(parent.getProtocol(), parent.getHost(), parent.getPort(), String.format("%s/%s/%s.csv.gz", parent.getPath(), getAIDFolder(aid), aid));
-		}
-		catch(Exception ex) {
-			throw new RuntimeException(ex);
+
+	public InputStream getPubChemXmlDesc(long aid) throws IOException {
+		String archive = getAIDArchive(aid);
+		String sUrl = String.format(pubchemBioAssayUrlFormat, ftpUser, ftpPass, "Description", archive);
+		String szip = String.format("zip:%s!/%s/%s.descr.xml.gz", sUrl,archive, aid);
+		log.debug(sUrl);
+		FileObject fo = VFS.getManager().resolveFile(szip);
+		log.debug("Resolved file: " + szip);
+		try{
+		InputStream is = fo.getContent().getInputStream();
+		return new GZIPInputStream(is);
+		}catch(Exception e){
+			log.info("AID: " + aid + " is not in the ftp site.", e.getMessage());
+			return null;
 		}
 	}
-	
-	public URL getPubChemXmlDescURL(long aid) {
-		try {
-			String sURL = String.format(pubchemBioAssayUrlFormat, ftpUser, ftpPass, "Description", getAIDFolder(aid), aid, ".descr.xml.gz");
-			return new URL(sURL);
-		}
-		catch(Exception ex) {
-			throw new RuntimeException(ex);
-		}
+
+	public InputStream getPubChemCsv(long aid) throws IOException {
+		String archive = getAIDArchive(aid);
+		String sUrl = String.format(pubchemBioAssayUrlFormat, ftpUser, ftpPass, "Data", archive);
+		String szip = String.format("zip:%s!/%s/%s.csv.gz", sUrl,archive, aid);
+		log.debug(sUrl);
+		FileObject fo = VFS.getManager().resolveFile(szip);
+		log.debug("Resolved file: " + szip);
+		InputStream is = fo.getContent().getInputStream();
+		return new GZIPInputStream(is);
 	}
-	
-	public URL getPubChemCsvURL(long aid) {
-		try {
-			String sURL = String.format(pubchemBioAssayUrlFormat, ftpUser, ftpPass, "Data", getAIDFolder(aid), aid, ".csv.gz");
-			return new URL(sURL);
-		}
-		catch(Exception ex) {
-			throw new RuntimeException(ex);
-		}
-	}
+
 }

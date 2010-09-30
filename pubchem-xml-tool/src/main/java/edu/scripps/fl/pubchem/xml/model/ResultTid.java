@@ -23,14 +23,14 @@ public class ResultTid {
 	private String tidName = "";
 	private String tidDescription = "";
 	private String tidType = "";
-	public Integer tidTypeValue;
-	public String tidUnit = "";
-	public Integer tidUnitValue;
+	private Integer tidTypeValue;
+	private String tidUnit = "";
+	private Integer tidUnitValue;
 	private Double tidConcentration;
 	private Integer tidPlot;
 	private Integer tidPanelNum;
 	private String tidPanelReadout;
-	public Integer tidPanelReadoutValue;
+	private Integer tidPanelReadoutValue;
 
 	public Double getTidConcentration() {
 		return tidConcentration;
@@ -87,93 +87,87 @@ public class ResultTid {
 		this.tidPanelNum = tidPanelNum;
 	}
 	public void setTidPanelReadout(String tidPanelReadout) {
-		if ("regular".equals(tidPanelReadout)) {
+		if ("regular".equalsIgnoreCase(tidPanelReadout))
 			this.tidPanelReadoutValue = 1;
-		}
-
-		else if ("outcome".equals(tidPanelReadout)) {
+		else if ("outcome".equalsIgnoreCase(tidPanelReadout))
 			this.tidPanelReadoutValue = 2;
-		}
-
-		else if ("ac".equals(tidPanelReadout)) {
+		else if ("score".equalsIgnoreCase(tidPanelReadout))
+			this.tidPanelReadoutValue = 3;
+		else if ("ac".equalsIgnoreCase(tidPanelReadout))
 			this.tidPanelReadoutValue = 4;
-		} 
-		else {
-			throw new UnsupportedOperationException("Unknown Panel Readout Type " + tidPanelReadout);
-		}
+		else 
+			throw new UnsupportedOperationException("Unknown Panel Readout Type: " + tidPanelReadout);
 
-		this.tidPanelReadout = tidPanelReadout;
+		this.tidPanelReadout = tidPanelReadout.toLowerCase();
 	}
 	public void setTidType(String tidType) {
-		if ("float".equals(tidType)) {
+		if ("float".equalsIgnoreCase(tidType))
 			this.tidTypeValue = 1;
-		} else if ("int".equals(tidType)) {
+		else if ("int".equalsIgnoreCase(tidType))
 			this.tidTypeValue = 2;
-		} else if ("bool".equals(tidType)) {
+		else if ("bool".equalsIgnoreCase(tidType))
 			this.tidTypeValue = 3;
-		} else if ("string".equals(tidType)) {
+		else if ("string".equalsIgnoreCase(tidType))
 			this.tidTypeValue = 4;
-		} 
-		else {
-			throw new UnsupportedOperationException("Unknown Type " + tidType);
-		}
-		this.tidType = tidType;
+		else 
+			throw new UnsupportedOperationException("Unknown Result Type: " + tidType);
+		
+		this.tidType = tidType.toLowerCase();
 	}
 	public void setTidUnit(String tidUnit) {
 
-		if ("ppt".equals(tidUnit)) {
+		if ("ppt".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 1;
-		} else if ("ppm".equals(tidUnit)) {
+		else if ("ppm".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 2;
-		} else if ("ppb".equals(tidUnit)) {
+		else if ("ppb".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 3;
-		} else if ("mm".equals(tidUnit)) {
+		else if ("mm".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 4;
-		} else if ("um".equals(tidUnit)) {
+		else if ("um".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 5;
-		} else if ("nm".equals(tidUnit)) {
+		else if ("nm".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 6;
-		} else if ("pm".equals(tidUnit)) {
+		else if ("pm".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 7;
-		} else if ("fm".equals(tidUnit)) {
+		else if ("fm".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 8;
-		} else if ("mgml".equals(tidUnit)) {
+		else if ("mgml".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 9;
-		} else if ("ugml".equals(tidUnit)) {
+		else if ("ugml".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 10;
-		} else if ("ngml".equals(tidUnit)) {
+		else if ("ngml".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 11;
-		} else if ("pgml".equals(tidUnit)) {
+		else if ("pgml".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 12;
-		} else if ("fgml".equals(tidUnit)) {
+		else if ("fgml".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 13;
-		} else if ("m".equals(tidUnit)) {
+		else if ("m".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 14;
-		} else if ("percent".equals(tidUnit)) {
+		else if ("percent".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 15;
-		} else if ("ratio".equals(tidUnit)) {
+		else if ("ratio".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 16;
-		} else if ("sec".equals(tidUnit)) {
+		else if ("sec".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 17;
-		} else if ("rsec".equals(tidUnit)) {
+		else if ("rsec".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 18;
-		} else if ("min".equals(tidUnit)) {
+		else if ("min".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 19;
-		} else if ("rmin".equals(tidUnit)) {
+		else if ("rmin".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 20;
-		} else if ("day".equals(tidUnit)) {
+		else if ("day".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 21;
-		} else if ("rday".equals(tidUnit)) {
+		else if ("rday".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 22;
-		} else if ("none".equals(tidUnit)) {
+		else if ("none".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 254;
-		} else if ("unspecified".equals(tidUnit)) {
+		else if ("unspecified".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 255;
-		} else {
-			throw new UnsupportedOperationException("Unknown unit " + tidUnit);
-		}
+		else
+			throw new UnsupportedOperationException("Unknown Result Unit: " + tidUnit);
 
-		this.tidUnit = tidUnit;
+		this.tidUnit = tidUnit.toLowerCase();
 	}
 
 }

@@ -22,7 +22,7 @@ public class Panel {
 	
 	private String panelName = "";
 	private Integer panelTargetGi;
-	private String panelProteinName;
+	private String panelTargetName;
 	private String panelTargetType;
 	private Integer panelGene;
 	private Integer panelTaxonomy;
@@ -40,8 +40,8 @@ public class Panel {
 		return panelName;
 	}
 
-	public String getPanelProteinName() {
-		return panelProteinName;
+	public String getPanelTargetName() {
+		return panelTargetName;
 	}
 
 	public Integer getPanelTargetGi() {
@@ -67,8 +67,8 @@ public class Panel {
 	public void setPanelName(String panelName) {
 		this.panelName = panelName;
 	}
-	public void setPanelProteinName(String panelProteinName) {
-		this.panelProteinName = panelProteinName;
+	public void setPanelTargetName(String panelTargetName) {
+		this.panelTargetName = panelTargetName;
 	}
 	
 	public void setPanelTargetGi(Integer panelTargetGi) {
@@ -76,23 +76,18 @@ public class Panel {
 	}
 	public void setPanelTargetType(String panelTargetType) {
 		
-		if(protein.equalsIgnoreCase(panelTargetType)){
+		if(protein.equalsIgnoreCase(panelTargetType))
 			this.panelTargetTypeValue = 1;
-		}
-		else if(DNA.equalsIgnoreCase(panelTargetType)){
+		else if(DNA.equalsIgnoreCase(panelTargetType))
 			this.panelTargetTypeValue = 2;
-		}
-		else if(RNA.equalsIgnoreCase(panelTargetType)){
+		else if(RNA.equalsIgnoreCase(panelTargetType))
 			this.panelTargetTypeValue = 3;
-		}
-		else if(otherBioPolymer.equalsIgnoreCase(panelTargetType)){
+		else if(otherBioPolymer.equalsIgnoreCase(panelTargetType))
 			this.panelTargetTypeValue = 4;
-		}
-		else{
-			throw new UnsupportedOperationException("Unknown target type" + panelTargetType);
-		}
+		else
+			throw new UnsupportedOperationException("Unknown Panel Target Type: " + panelTargetType);
 		
-		this.panelTargetType = panelTargetType;
+		this.panelTargetType = panelTargetType.toLowerCase();
 	}
 	public void setPanelTaxonomy(Integer panelTaxonomy) {
 		this.panelTaxonomy = panelTaxonomy;
