@@ -16,11 +16,16 @@
 package edu.scripps.fl.pubchem.xmltool.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,6 +44,8 @@ public class SwingGUI extends JPanel {
 	private static final Logger log = LoggerFactory.getLogger(SwingGUI.class);
 	
 	public static final String APP_NAME = "PubChem XML Tool";
+//	isInternal is used in CreatorGUI, ExtractorGUI and ReportController
+	private static final Boolean isInternal = false;
 	
 	public static void main(String args[]) throws Exception {
 //		BasicConfigurator.configure();
@@ -53,11 +60,11 @@ public class SwingGUI extends JPanel {
 		tabbedPane.setAlignmentY(CENTER_ALIGNMENT);
 		
 		JPanel xmlCreator = new JPanel();
-		xmlCreator.add(new PubChemXMLCreatorGUI());
+		xmlCreator.add(new PubChemXMLCreatorGUI(isInternal));
 		tabbedPane.addTab("Create PubChem XML", xmlCreator);
 		
 		JPanel xmlExtractor = new JPanel();
-		xmlExtractor.add(new PubChemXMLExtractorGUI());
+		xmlExtractor.add(new PubChemXMLExtractorGUI(isInternal));
 		tabbedPane.addTab("Extract PubChem XML", xmlExtractor);
 		
 		JPanel about = new JPanel();
@@ -106,5 +113,7 @@ public class SwingGUI extends JPanel {
 			log.error(ex.getMessage(), ex);
 		}	
 	}
+	
+
 	
 }

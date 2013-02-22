@@ -24,6 +24,7 @@ import org.dom4j.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.scripps.fl.pubchem.xml.model.Gene;
 import edu.scripps.fl.pubchem.xml.model.Target;
 
 /*
@@ -36,66 +37,6 @@ public class TargetXML {
 	public static String rootString = "/PC-AssayContainer/PC-AssaySubmit/PC-AssaySubmit_assay/PC-AssaySubmit_assay_descr/PC-AssayDescription",
 			target = "PC-AssayDescription_target";
 	
-	
-//	public void buildTargetDocument(Document document, List<Xref> xrefs) throws Exception {
-//		int numTargets = 0;
-//		for (Xref xx : xrefs) {
-//			if (xx.getIsTarget() != null) {
-//				if (xx.getIsTarget() == true)
-//					numTargets = numTargets + 1;
-//			}
-//		}
-//		if (numTargets > 0) {
-//			Element root = (Element) document.selectSingleNode(rootString);
-//			Node targetNode = root.selectSingleNode("//" + target);
-//			if (targetNode != null) {
-//				targetNode.detach();
-//			}
-//			Element targetElement = root.addElement(target);
-//			PubChemXMLDoc xmlDoc = new PubChemXMLDoc();
-//			for (Xref xx : xrefs) {
-//				if (xx.getIsTarget() != null) {
-//					if (xx.getIsTarget() == true) {
-//
-//						String type = xx.getXrefType();
-//						Double num = Double.parseDouble(xx.getXrefValue().toString());
-//						Integer value = num.intValue();
-//						Document targetDoc = xmlDoc.getDocument(value, type);
-//						String name = xmlDoc.getTargetInformation(targetDoc, "Title");
-//						if (type.equalsIgnoreCase("nucleotide")) {
-//							if (name.contains("dna") | name.contains("DNA") | name.contains("gene")) {
-//								xx.setXrefTargetValue(2);
-//								xx.setXrefTargetType("dna");
-//							} else if (name.contains("RNA") | name.contains("rna")) {
-//								xx.setXrefTargetValue(3);
-//								xx.setXrefTargetType("rna");
-//							}
-//						}
-//						Object taxon = xmlDoc.getTargetInformation(targetDoc, "TaxId");
-//						Document taxonDoc = xmlDoc.getDocument(taxon, "taxonomy");
-//
-//						Element info = targetElement.addElement("PC-AssayTargetInfo");
-//						info.addElement("PC-AssayTargetInfo_name").addText(name);
-//						info.addElement("PC-AssayTargetInfo_mol-id").addText(String.valueOf(num.intValue()));
-//						info.addElement("PC-AssayTargetInfo_molecule-type").addAttribute("value", xx.getXrefTargetType()).addText(
-//								xx.getXrefTargetValue().toString());
-//						Element organism = info.addElement("PC-AssayTargetInfo_organism");
-//						Element element = organism.addElement("BioSource");
-//						element = element.addElement("BioSource_org");
-//						element = element.addElement("Org-ref");
-//						element.addElement("Org-ref_taxname").addText(xmlDoc.getTargetInformation(taxonDoc, "ScientificName"));
-//						element.addElement("Org-ref_common").addText(xmlDoc.getTargetInformation(taxonDoc, "CommonName"));
-//						element = element.addElement("Org-ref_db");
-//						element = element.addElement("Dbtag");
-//						element.addElement("Dbtag_db").addText("taxon");
-//						element = element.addElement("Dbtag_tag");
-//						element = element.addElement("Object-id");
-//						element.addElement("Object-id_id").addText(taxon.toString());
-//					}
-//				}
-//			}
-//		}
-//	}
 
 	public List<Target> buildTargetDocument(Document document, List<Target> targets) throws Exception {
 		List<Target> targetsOfAssay = new ArrayList<Target>();
@@ -149,6 +90,16 @@ public class TargetXML {
 					}
 		}
 		return otherTargets;
+	}
+	
+	public void addGeneTargetToDocument(Document document, Gene gene){
+		Element root = (Element) document.selectSingleNode(rootString);
+		Element targetElem = (Element) root.selectSingleNode("//" + target);
+		Element info = targetElem.addElement("PC-AssayTargetInfo");
+		info.addElement("PC-AssayTargetInfo_name").addText(gene.getName());
+		info.addElement("PC-AssayTargetInfo_mol-id").addText("" + gene.getId());
+		info.addElement("PC-AssayTargetInfo_molecule-type").addAttribute("value", "gene").addText("" + 4);
+		
 	}
 
 

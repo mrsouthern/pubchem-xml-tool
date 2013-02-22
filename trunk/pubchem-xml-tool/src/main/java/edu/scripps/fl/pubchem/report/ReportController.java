@@ -39,23 +39,33 @@ import edu.scripps.fl.pubchem.xml.model.PubChemAssay;
  */
 public class ReportController {
 	
-	public void createReport(File fileExcel, File filePDFOutput, File fileWordOutput) throws Exception {
-		ExcelTableModel tableModel = ExcelTableModel.load(fileExcel, false); 
-		HashMap parameters = new HashMap();
-		
-		File file = imagesInTempDir();
-		String path = file.getAbsolutePath();
-		URL url = getClass().getClassLoader().getResource("report1.jasper");
-		
-		JasperPrint print = JasperFillManager.fillReport(path + "\\report1.jasper" , parameters, new JRBeanCollectionDataSource(Report.getBeanCollection(tableModel)));
-		JasperExportManager.exportReportToPdfFile(print, filePDFOutput.getAbsolutePath());
-		JRDocxExporter docxExporter = new JRDocxExporter();
-		docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-		docxExporter.setParameter(JRExporterParameter.OUTPUT_FILE, fileWordOutput);
-		docxExporter.exportReport();
-	}
+	private Boolean isInternal;
+	private String jasperReport;
 	
-	public ArrayList<PubChemAssay> createReport(PubChemDeposition pcDep, File fileExcel, File filePDFOutput, File fileWordOutput) throws Exception {
+//	public void createReport(File fileExcel, File filePDFOutput, File fileWordOutput) throws Exception {
+//		ExcelTableModel tableModel = ExcelTableModel.load(fileExcel, false); 
+//		HashMap parameters = new HashMap();
+//		
+//		File file = imagesInTempDir();
+//		String path = file.getAbsolutePath();
+//	
+//		URL url = getClass().getClassLoader().getResource("report1.jasper");
+//		
+//		JasperPrint print = JasperFillManager.fillReport(path + "\\report1.jasper" , parameters, new JRBeanCollectionDataSource(Report.getBeanCollection(tableModel)));
+//		JasperExportManager.exportReportToPdfFile(print, filePDFOutput.getAbsolutePath());
+//		JRDocxExporter docxExporter = new JRDocxExporter();
+//		docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+//		docxExporter.setParameter(JRExporterParameter.OUTPUT_FILE, fileWordOutput);
+//		docxExporter.exportReport();
+//	}
+	
+	public ArrayList<PubChemAssay> createReport(PubChemDeposition pcDep, File fileExcel, File filePDFOutput, File fileWordOutput, Boolean isInternal) throws Exception {
+//		isInternal is initially set in SwingGUI
+		this.isInternal = isInternal;
+		if(isInternal)
+			this.jasperReport = "report1";
+		else
+			this.jasperReport = "ExternalReport";
 		ExcelTableModel tableModel = ExcelTableModel.load(fileExcel, true); 
 		HashMap parameters = (HashMap) new Report().createParameterMap(tableModel, pcDep);
 		
@@ -63,14 +73,10 @@ public class ReportController {
 		
 		File file = imagesInTempDir();
 		String path = file.getAbsolutePath();
-//		Scripps Report
-		URL url = getClass().getClassLoader().getResource("report1.jasper");
-		
-		JasperPrint print = JasperFillManager.fillReport(path + "\\report1.jasper" , parameters, new JRBeanCollectionDataSource(assay));
-//		External Report
-//		URL url = getClass().getClassLoader().getResource("ExternalReport.jasper");
-//		
-//		JasperPrint print = JasperFillManager.fillReport(path + "\\ExternalReport.jasper" , parameters, new JRBeanCollectionDataSource(assay));
+
+		URL url = getClass().getClassLoader().getResource(jasperReport + ".jasper");		
+		JasperPrint print = JasperFillManager.fillReport(path + "\\" + jasperReport + ".jasper" , parameters, new JRBeanCollectionDataSource(assay));
+
 		JasperExportManager.exportReportToPdfFile(print, filePDFOutput.getAbsolutePath());
 		JRDocxExporter docxExporter = new JRDocxExporter();
 		docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
@@ -83,20 +89,23 @@ public class ReportController {
 	
 	public File imagesInTempDir() throws IOException{
 		File file = new DirUtils().createTempDirectory("JasperReport", "");
-//		Scripps Report
-		URL url = getClass().getClassLoader().getResource("report1.jasper");
-		FileUtils.copyURLToFile(url,new File(file.getAbsolutePath() + "\\report1.jasper"));
-		url = getClass().getClassLoader().getResource("logo.png");
-		FileUtils.copyURLToFile(url, new File(file.getAbsolutePath() + "\\logo.png"));
-		url = getClass().getClassLoader().getResource("Screening Center Logo.png");
-		FileUtils.copyURLToFile(url, new File(file.getAbsolutePath() + "\\Screening Center Logo.png"));
-//		External Report
-//		URL url = getClass().getClassLoader().getResource("ExternalReport.jasper");
-//		FileUtils.copyURLToFile(url,new File(file.getAbsolutePath() + "\\ExternalReport.jasper"));
-//		url = getClass().getClassLoader().getResource("YourLogoHere.png");
-//		FileUtils.copyURLToFile(url, new File(file.getAbsolutePath() + "\\YourLogoHere.png"));
 
-		
+		URL url = getClass().getClassLoader().getResource(jasperReport + ".jasper");
+		FileUtils.copyURLToFile(url,new File(file.getAbsolutePath() + "\\" + jasperReport +".jasper"));
+
+		if(isInternal){
+//			Scripps Report
+			url = getClass().getClassLoader().getResource("logo.png");
+			FileUtils.copyURLToFile(url, new File(file.getAbsolutePath() + "\\logo.png"));
+			url = getClass().getClassLoader().getResource("Screening Center Logo.png");
+			FileUtils.copyURLToFile(url, new File(file.getAbsolutePath() + "\\Screening Center Logo.png"));
+		}
+		else{
+//			External Report
+			url = getClass().getClassLoader().getResource("YourLogoHere.png");
+			FileUtils.copyURLToFile(url, new File(file.getAbsolutePath() + "\\YourLogoHere.png"));
+		}
+
 		return file;
 	}
 	

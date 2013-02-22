@@ -44,13 +44,14 @@ public class PubChemXMLCreatorController {
 		
 		PubChemAssay assay = array.getAssayValues(model);
 		PubChemAssayFactory factory = new PubChemAssayFactory();
-		factory.setUpPubChemAssay(assay, array.getTidValues(model), array.getXrefs(model), array.getPanelValues(model));
+		factory.setUpPubChemAssay(assay, array.getTidValues(model), array.getXrefs(model), array.getPanelValues(model), array.getCategorizedComments(model));
 		factory.placeCitationsInDescription(assay, false);
 		
 		new AssayXML().buildAssayDocument(doc, assay);
 		new ResultTidXML().buildTidDocument(doc, assay.getResultTids());
 		new XrefXML().buildXrefDocument(doc, assay);
 		new PanelXML().buildPanelDocument(doc, assay.getPanels());
+		new CategorizedCommentXML().buildCategorizedCommentDocument(doc, assay.getCategorizedComments());
 
 		xmldoc.write(doc, fileXMLOutput);
 		

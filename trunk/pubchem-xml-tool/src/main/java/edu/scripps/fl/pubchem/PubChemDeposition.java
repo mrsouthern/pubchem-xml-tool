@@ -1,11 +1,17 @@
 package edu.scripps.fl.pubchem;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.scripps.fl.pubchem.web.session.PCDepositionSystemSession;
 import edu.scripps.fl.pubchem.xmltool.gui.DepositionLoginGUI;
 
 public class PubChemDeposition {

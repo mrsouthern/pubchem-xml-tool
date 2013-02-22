@@ -49,10 +49,14 @@ public class PubChemXMLCreatorGUI extends JPanel implements ActionListener, Mous
 	private GridBagConstraints gbc01, gbc02, gbc03, gbc04, gbc05, gbc06, gbc07, gbc08, gbc09, gbc10;
 	private PubChemDeposition pcDep = new PubChemDeposition();
 	private static final Logger log = LoggerFactory.getLogger(PubChemXMLCreatorGUI.class);
+	private Boolean isInternal;
+	private String notError = "This is not an error message.\n\nHere are a few suggestions for your Excel Workbook:\n\n";
 	
-	public PubChemXMLCreatorGUI(){
+	public PubChemXMLCreatorGUI(Boolean isInternal){
 		DOMConfigurator.configure(PubChemXMLCreatorGUI.class.getClassLoader().getResource("log4j.config.xml"));
-
+//		isInternal is initially set in SwingGUI
+		this.isInternal = isInternal;
+	
 			setBorder(BorderFactory.createTitledBorder("PubChem XML Creator"));
 	        setLayout(new GridBagLayout());
 			
@@ -139,7 +143,7 @@ public class PubChemXMLCreatorGUI extends JPanel implements ActionListener, Mous
 				PubChemAssay assay = new PubChemXMLCreatorController().createPubChemXML(fileTemplate, fileExcel, fileOutput);
 				String message = assay.getMessage();
 				if(! message.equals("")){
-					int nn = JOptionPane.showOptionDialog(this, message + "Would you like to edit your Excel Workbook?", SwingGUI.APP_NAME, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+					int nn = JOptionPane.showOptionDialog(this, notError + message + "\nWould you like to edit your Excel Workbook?", SwingGUI.APP_NAME, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 					if(nn == JOptionPane.YES_OPTION){
 						log.info("Opening Excel Workbook with Desktop: " + fileExcel);
 						Desktop.getDesktop().open(fileExcel);
@@ -160,23 +164,23 @@ public class PubChemXMLCreatorGUI extends JPanel implements ActionListener, Mous
 				File fileWordOutput	= File.createTempFile("PubChem_Word_Report", ".docx");
 				filePDFOutput.deleteOnExit();
 				fileWordOutput.deleteOnExit();
-				ArrayList<PubChemAssay> assay = new ReportController().createReport(pcDep, fileExcel, filePDFOutput, fileWordOutput);
+				ArrayList<PubChemAssay> assay = new ReportController().createReport(pcDep, fileExcel, filePDFOutput, fileWordOutput, isInternal);
 				String message = null;
 				for(PubChemAssay xx: assay){
 					message = xx.getMessage();
 					if(! message.equals("")){
-						int nn = JOptionPane.showOptionDialog(this, message + "\nWould you like to edit your Excel Workbook?", SwingGUI.APP_NAME, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+						int nn = JOptionPane.showOptionDialog(this, notError + message + "\nWould you like to edit your Excel Workbook?", SwingGUI.APP_NAME, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 						if(nn == JOptionPane.YES_OPTION){
 							log.info("Opening Excel Workbook with Desktop: " + fileExcel);
 							Desktop.getDesktop().open(fileExcel);
 						}
 						else{
-							Desktop.getDesktop().open(filePDFOutput);
+							gc.openPDF(isInternal, filePDFOutput, this);
 							Desktop.getDesktop().open(fileWordOutput);
 						}
 					}
 					else{
-						Desktop.getDesktop().open(filePDFOutput);
+						gc.openPDF(isInternal, filePDFOutput, this);
 						Desktop.getDesktop().open(fileWordOutput);
 					}
 				}
@@ -202,7 +206,7 @@ public class PubChemXMLCreatorGUI extends JPanel implements ActionListener, Mous
 				} else if (e.getSource() == jtpExcelTemplate) {
 					File saveFile = gc.fileChooser(jtfFileExcel, ".xlsx", "save");
 					if (saveFile != null) {
-						URL url = getClass().getClassLoader().getResource("ExcelTemplate.xlsx");
+						URL url = getClass().getClassLoader().getResource("ExcelTemplate_withBAO.xlsx");
 						OutputStream out = new FileOutputStream(saveFile, true);
 						IOUtils.copy(url.openStream(), out);
 						String output = FilenameUtils.concat(FilenameUtils.getFullPath(saveFile.toString()), FilenameUtils

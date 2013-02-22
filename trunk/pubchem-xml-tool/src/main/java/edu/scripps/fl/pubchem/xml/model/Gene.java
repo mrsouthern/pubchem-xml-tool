@@ -29,6 +29,7 @@ public class Gene {
 	private String name;
 	private Target target;
 	private Integer omim, taxonomy;
+	private Boolean isTarget = false;
 	
 	
 	public Gene(){
@@ -135,6 +136,14 @@ public class Gene {
 
 	public Collection<Long> getOmims() {
 		return omims;
+	}
+
+	public void setIsTarget(Boolean isTarget) {
+		this.isTarget = isTarget;
+	}
+
+	public Boolean getIsTarget() {
+		return isTarget;
 	}
 
 }

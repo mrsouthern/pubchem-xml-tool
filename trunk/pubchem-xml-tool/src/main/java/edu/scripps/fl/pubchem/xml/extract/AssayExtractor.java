@@ -21,12 +21,15 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.dom4j.Document;
 import org.dom4j.Node;
 
 import com.googlecode.exceltablemodel.ExcelTableModel;
 
+import edu.scripps.fl.pubchem.xml.PubChemXMLUtils;
 import edu.scripps.fl.pubchem.xml.model.Assay;
 
 /*
@@ -34,58 +37,70 @@ import edu.scripps.fl.pubchem.xml.model.Assay;
  */
 public class AssayExtractor {
 	
-	public void fillAssayExcelTemplate(ExcelTableModel model, Assay assay) {
+	public void fillAssayExcelTemplate(ExcelTableModel model, Assay assay) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
 		model.setSheet("Assay");
 		model.setUseFirstRowAsColumnHeadings(false);
-		String description = "description";
-		String protocol = "protocol";
-		String comment = "comment";
-		String aid = "aid";
-		String grantNum = "grant number";
-		String activityOutcome = "activity outcome method";
-		String projectCateg	= "project category";
-		String holdDate = "hold until date";
-		String source = "source";
-		for(int ii = 0; ii < model.getRowCount(); ii++){
-			String section = model.getValueAt(ii, 0).toString();
-			if(description.equalsIgnoreCase(section))
-					model.setValueAt(assay.getDescription(), ii, 1);
-			else if(protocol.equalsIgnoreCase(section))
-				model.setValueAt(assay.getProtocol(), ii, 1);
-			else if(comment.equalsIgnoreCase(section))
-				model.setValueAt(assay.getComment(), ii , 1);
-			else if(aid.equalsIgnoreCase(section))
-				model.setValueAt(assay.getAid(), ii, 1);
-			else if(grantNum.equalsIgnoreCase(section))
-				model.setValueAt(assay.getGrantNumber(), ii, 1);
-			else if(activityOutcome.equalsIgnoreCase(section))
-				model.setValueAt(assay.getActivityOutcomeMethod(), ii, 1);
-			else if(projectCateg.equalsIgnoreCase(section))
-				model.setValueAt(assay.getProjectCategory(), ii, 1);
-			else if(holdDate.equalsIgnoreCase(section))
+		String[] tags = {"AID", "Name", "External Reg Id", "Grant Number", "Project Category", "Hold Until Date", "Activity Outcome Method", "Source"};
+		Integer count = tags.length;
+		
+		for(int ii=0; ii< count; ii++){
+			model.setValueAt(tags[ii], ii,0);
+			String property = StringUtils.uncapitalize(tags[ii].replaceAll(" ", ""));
+			if(tags[ii].equals("AID"))
+				property = property.toLowerCase();
+			if(property.equals("holdUntilDate"))
 				model.setValueAt(assay.getHoldUntilDate(), ii, 1);
-			else if(source.equalsIgnoreCase(section))
-				model.setValueAt(assay.getSource(), ii, 1);
+			else{
+				Object value = BeanUtils.getProperty(assay, property);
+				model.setValueAt(value, ii, 1);
+			}
 		}
+		List<String> descriptionS = assay.getDescription();
+		putStringListInModel(model, descriptionS, count, "Description");
+		
+		List<String> protocolS = assay.getProtocol();
+		count = count + descriptionS.size(); 
+		putStringListInModel(model, protocolS, count, "Protocol");
+		
+		List<String> commentS = assay.getComment();
+		count = count + protocolS.size(); 
+		putStringListInModel(model, commentS, count, "Comment");
+		
 //		Sheet sheet = model.getSheet();
 //		for(int ii = 0; ii <= model.getColumnCount(); ii++)
 //			sheet.autoSizeColumn(ii);
 	}
 	
-	protected Assay getAssayValuesFromXML(Document doc) throws ParseException, IllegalAccessException, InvocationTargetException {
-		Assay assay = new Assay();
-		
-		getElementText(assay, "//PC-AssayDescription_description_E", doc, "description");
-		getElementText(assay, "//PC-AssayDescription_protocol_E", doc, "protocol");
-		getElementText(assay, "//PC-AssayDescription_comment_E", doc, "comment");
-		getElementText(assay, "//PC-ID_id", doc, "aid");
-		getElementText(assay, "//PC-AssayDescription_grant-number_E", doc, "grantNumber");
-		getElementText(assay, "//PC-DBTracking_name", doc, "source");
+	private void putStringListInModel(ExcelTableModel model, List<String> strings, Integer count, String name){
+		for(int hh = 0; hh< strings.size(); hh++){
+			String ss = strings.get(hh);
+			Integer row = hh + count;
+			model.setValueAt(name, row, 0);
+			model.setValueAt(ss, row, 1);
+			Cell cell = model.getCellAt(row, 1);
+			CellStyle style = cell.getCellStyle();
+			style.setWrapText(true);
+			cell.setCellStyle(style);
+		}
+	}
 	
-		String attribute = getElementAttribute("//PC-AssayDescription_activity-outcome-method", doc);
+	public Assay getAssayValuesFromXML(Document doc) throws ParseException, IllegalAccessException, InvocationTargetException {
+		Assay assay = new Assay();
+		PubChemXMLUtils utils = new PubChemXMLUtils();
+		
+		utils.getElementText(assay, "//PC-DBTracking_source-id/Object-id/Object-id_str", doc, "externalRegId");
+		utils.getElementText(assay, "//PC-AssayDescription_name", doc, "name");
+		utils.getListofElementsText(assay, "//PC-AssayDescription_description_E", doc, "description");
+		utils.getListofElementsText(assay, "//PC-AssayDescription_protocol_E", doc, "protocol");
+		utils.getListofElementsText(assay, "//PC-AssayDescription_comment_E", doc, "comment");
+		utils.getElementText(assay, "//PC-ID_id", doc, "aid");
+		utils.getElementText(assay, "//PC-AssayDescription_grant-number_E", doc, "grantNumber");
+		utils.getElementText(assay, "//PC-DBTracking_name", doc, "source");
+	
+		String attribute = utils.getElementAttribute("//PC-AssayDescription_activity-outcome-method", doc);
 		if(! attribute.equals(""))
 			assay.setActivityOutcomeMethod(attribute);
-		attribute = getElementAttribute("//PC-AssayDescription_project-category", doc);
+		attribute = utils.getElementAttribute("//PC-AssayDescription_project-category", doc);
 		if(! attribute.equals(""))
 			assay.setProjectCategory(attribute);		
 		Node node = doc.selectSingleNode("//PC-DBTracking_date/Date/Date_std/Date-std");
@@ -93,28 +108,6 @@ public class AssayExtractor {
 			assay.setHoldUntilDate(new SimpleDateFormat("MM/dd/yyyy").parse(node.selectSingleNode("Date-std_month").getText() + "/" + node.selectSingleNode("Date-std_day").getText() + "/" + node.selectSingleNode("Date-std_year").getText()));
 		
 		return assay;
-	}
-	
-	protected void getElementText(Assay assay, String nodeName, Document doc, String property) throws IllegalAccessException, InvocationTargetException {
-		List<Node> nodes = doc.selectNodes(nodeName);
-		String text = "";
-		for(Node nn : nodes){
-			if (null != nn.getText())
-				text = text + nn.getText() + "\n";
-		}
-		BeanUtils.setProperty(assay, property, text);
-	}
-	
-	protected String getElementAttribute(String elementName, Document doc){
-		Node node = doc.selectSingleNode(elementName);
-		String attribute;
-		if(null == node)
-			attribute = "";
-		else
-			attribute = node.valueOf("@value");
-		if(null == attribute)
-			attribute = "";
-		return attribute;
 	}
 
 }

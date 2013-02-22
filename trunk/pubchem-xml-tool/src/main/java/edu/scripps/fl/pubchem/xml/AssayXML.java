@@ -31,7 +31,7 @@ public class AssayXML {
 	
 	public static String rootString = "/PC-AssayContainer/PC-AssaySubmit/PC-AssaySubmit_assay/PC-AssaySubmit_assay_descr/PC-AssayDescription",
 						aid = "PC-AssayDescription_aid",					
-						dbTracking = "//PC-AssayDescription_aid-source/PC-Source/PC-Source_db/PC-DBTracking",
+						source = "//PC-AssayDescription_aid-source/PC-Source/PC-Source_db/PC-DBTracking",
 						dateNode = "PC-DBTracking_date/Date/Date_std/Date-std",
 						yearElement = "Date-std_year",
 						monthElement = "Date-std_month",
@@ -44,20 +44,10 @@ public class AssayXML {
 						projectCategory = "PC-AssayDescription_project-category";
 	
 	public void buildAssayDocument(Document document, PubChemAssay assay) throws Exception {
+		PubChemXMLUtils utils = new PubChemXMLUtils();
+		
 		Element root = (Element) document.selectSingleNode(rootString);
-		if(assay.getSource() != null){
-			Element element = (Element) root.selectSingleNode(dbTracking);
-			Node node =element.selectSingleNode("PC-DBTracking_name");
-			if(node != null)
-				node.detach();
-			element.addElement("PC-DBTracking_name").addText(assay.getSource());
-		}
-		if(assay.getDescription() != null)
-			add(description, assay.getDescription(), root);
-		if(assay.getProtocol() != null)
-			add(protocol, assay.getProtocol(), root);
-		if(assay.getComment() != null)
-			add(comment, assay.getComment(), root);
+		
 		if(assay.getAid() != null){
 			Element element = (Element) root.selectSingleNode(aid);
 			if(element == null)
@@ -71,16 +61,31 @@ public class AssayXML {
 			else
 				element.setText("" + assay.getAid());
 		}
+		
+		Element sourceNode = (Element) root.selectSingleNode(source);
+		if(assay.getSource() != null)
+			utils.add("PC-DBTracking_name", assay.getSource(), sourceNode);
+		sourceNode = (Element) sourceNode.selectSingleNode("PC-DBTracking_source-id/Object-id");
+		if(assay.getExternalRegId() != null)
+			utils.add("Object-id_str", assay.getExternalRegId(), sourceNode);
+		if(assay.getName() != null)
+			utils.add("PC-AssayDescription_name", assay.getName(), root);
+		if(assay.getDescription() != null)
+			utils.add_E(description, assay.getDescription(), root);
+		if(assay.getProtocol() != null)
+			utils.add_E(protocol, assay.getProtocol(), root);
+		if(assay.getComment() != null)
+			utils.add_E(comment, assay.getComment(), root);
 		if(assay.getGrantNumber() != null)
-			add(grantNumber, assay.getGrantNumber(), root);
+			utils.add_E(grantNumber, assay.getGrantNumber(), root);
 		if(assay.getActivityOutcomeMethod()!= null)
-			attributeAndTextAdd(activityOutcome, assay.getActivityOutcomeMethod(), assay.getActivityOutcomeMethodValue().toString(), root);
+			utils.attributeAndTextAdd(activityOutcome, assay.getActivityOutcomeMethod(), assay.getActivityOutcomeMethodValue().toString(), root);
 		if(assay.getProjectCategory() != null)
-			attributeAndTextAdd(projectCategory, assay.getProjectCategory(), assay.getProjectCategoryValue().toString(), root);
+			utils.attributeAndTextAdd(projectCategory, assay.getProjectCategory(), assay.getProjectCategoryValue().toString(), root);
 
 		Date date = assay.getHoldUntilDate();
 		if (date != null) {
-			Element element = (Element) document.selectSingleNode(dbTracking);
+			Element element = (Element) document.selectSingleNode(source);
 			if (element != null) {
 				String day = new SimpleDateFormat("dd").format(date);
 				String month = new SimpleDateFormat("MM").format(date);
@@ -102,24 +107,7 @@ public class AssayXML {
 		}
 	}
 	
-	protected void add(String nodeName, String text, Element parent) {
-		Node node = parent.selectSingleNode(nodeName);
-		if( node != null )
-			node.detach();
-		node = parent.addElement(nodeName);
-		for(String line: text.split("\\r?\\n")) {
-			Element child = ((Element)node).addElement(nodeName + "_E");
-			child.addText(line);
-		}
-	}
-	
-	protected void attributeAndTextAdd(String nodeName, String attribute, String text, Element parent){
-			Node node = parent.selectSingleNode(nodeName);
-			if (node != null)
-				node.detach();
-			Element element = parent.addElement(nodeName).addText(text);
-			element.addAttribute("value", attribute);	
-	}
+
 	
 
 

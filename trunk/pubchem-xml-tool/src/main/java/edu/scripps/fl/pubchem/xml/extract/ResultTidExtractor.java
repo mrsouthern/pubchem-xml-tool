@@ -37,7 +37,7 @@ public class ResultTidExtractor {
 		model.setSheet("Tids");
 		Map<Integer, String> map = new XMLExtractor().getColumnsMap(model);
 		String[] tidProperties = { "tidName", "tidDescription", "tidType", "tidUnit", "tidConcentration", "tidPlot", "tidPanelNum",
-		"tidPanelReadout" };
+		"tidPanelReadout" , "isActiveConcentration"};
 		for (int ii = 0; ii <= tidValues.size() - 1; ii++) {
 			ResultTid tidValue = tidValues.get(ii);
 			for (String property : tidProperties) {
@@ -50,7 +50,7 @@ public class ResultTidExtractor {
 		new XMLExtractor().autoSizeSheet(model);
 	}
 	
-	protected List<ResultTid> getTidValuesFromXML(Document doc) throws IllegalAccessException, InvocationTargetException  {	
+	public List<ResultTid> getTidValuesFromXML(Document doc) throws IllegalAccessException, InvocationTargetException  {	
 
 		List<ResultTid> tidValues = new ArrayList<ResultTid>();
 		List<Node> nodes = doc.selectNodes("//PC-AssayDescription_results/PC-ResultType");
@@ -64,6 +64,9 @@ public class ResultTidExtractor {
 			node = nn.selectSingleNode("PC-ResultType_description/PC-ResultType_description_E");
 			if(node != null)
 				tidValue.setTidDescription(node.getText());
+			node = nn.selectSingleNode("PC-ResultType_ac");
+			if(node != null)
+				tidValue.setIsActiveConcentration(true);
 			node = nn.selectSingleNode("PC-ResultType_tc");
 			if( node != null ) {
 				Node node2 = node.selectSingleNode("PC-ConcentrationAttr/PC-ConcentrationAttr_dr-id");

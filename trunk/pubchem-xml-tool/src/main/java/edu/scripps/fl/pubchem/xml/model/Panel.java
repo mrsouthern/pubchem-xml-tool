@@ -15,82 +15,43 @@
  */
 package edu.scripps.fl.pubchem.xml.model;
 
+import java.util.List;
+
 /*
  * @author S Canny (scanny at scripps dot edu)
  */
 public class Panel {
-	
-	private String panelName = "";
-	private Integer panelTargetGi;
-	private String panelTargetName;
-	private String panelTargetType;
-	private Integer panelGene;
-	private Integer panelTaxonomy;
-	private Integer panelTargetTypeValue;
-	public static final String protein = "protein";
-	public static final String DNA = "DNA";
-	public static final String RNA = "RNA";
-	public static final String otherBioPolymer = "other-biopolymer";
-	
-	public Integer getPanelGene() {
-		return panelGene;
-	}
 
+	private String panelName = "";
+
+	private List<Integer> panelGene;
+	private List<Integer> panelTaxonomy;
+	private List<PanelTarget> panelTarget;
 	public String getPanelName() {
 		return panelName;
 	}
-
-	public String getPanelTargetName() {
-		return panelTargetName;
-	}
-
-	public Integer getPanelTargetGi() {
-		return panelTargetGi;
-	}
-
-	public String getPanelTargetType() {
-		return panelTargetType;
-	}
-
-	public Integer getPanelTargetTypeValue() {
-		return panelTargetTypeValue;
-	}
-
-	public Integer getPanelTaxonomy() {
-		return panelTaxonomy;
-	}
-	
-	public void setPanelGene(Integer panelGene) {
-		this.panelGene = panelGene;
-	}
-	
 	public void setPanelName(String panelName) {
 		this.panelName = panelName;
 	}
-	public void setPanelTargetName(String panelTargetName) {
-		this.panelTargetName = panelTargetName;
+	public List<Integer> getPanelGene() {
+		return panelGene;
 	}
-	
-	public void setPanelTargetGi(Integer panelTargetGi) {
-		this.panelTargetGi = panelTargetGi;
+	public void setPanelGene(List<Integer> panelGene) {
+		this.panelGene = panelGene;
 	}
-	public void setPanelTargetType(String panelTargetType) {
-		
-		if(protein.equalsIgnoreCase(panelTargetType))
-			this.panelTargetTypeValue = 1;
-		else if(DNA.equalsIgnoreCase(panelTargetType))
-			this.panelTargetTypeValue = 2;
-		else if(RNA.equalsIgnoreCase(panelTargetType))
-			this.panelTargetTypeValue = 3;
-		else if(otherBioPolymer.equalsIgnoreCase(panelTargetType))
-			this.panelTargetTypeValue = 4;
-		else
-			throw new UnsupportedOperationException("Unknown Panel Target Type: " + panelTargetType);
-		
-		this.panelTargetType = panelTargetType.toLowerCase();
+	public List<Integer> getPanelTaxonomy() {
+		return panelTaxonomy;
 	}
-	public void setPanelTaxonomy(Integer panelTaxonomy) {
+	public void setPanelTaxonomy(List<Integer> panelTaxonomy) {
 		this.panelTaxonomy = panelTaxonomy;
 	}
+	public List<PanelTarget> getPanelTarget() {
+		return panelTarget;
+	}
+	public void setPanelTarget(List<PanelTarget> panelTarget) {
+		this.panelTarget = panelTarget;
+	}
+
+
 
 }

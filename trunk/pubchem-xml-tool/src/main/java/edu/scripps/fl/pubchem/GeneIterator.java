@@ -35,7 +35,7 @@ public class GeneIterator implements Iterator<Gene> {
 //	}
 	
 	public static List<String> getAttributes(Node node, String... attributes) {
-		List<String> attrs = new ArrayList(attributes.length);
+		List<String> attrs = new ArrayList<String>(attributes.length);
 		for(String attr: attributes) {
 			Node n = node.selectSingleNode(String.format("Item[@Name='%s']", attr));
 			attrs.add(n == null ? "" : n.getText());

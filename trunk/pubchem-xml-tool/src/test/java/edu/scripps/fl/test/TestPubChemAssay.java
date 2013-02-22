@@ -1,15 +1,12 @@
 package edu.scripps.fl.test;
 
 import java.io.File;
-
 import java.util.ArrayList;
-
-import java.util.List;
+import java.util.Set;
 
 import com.googlecode.exceltablemodel.ExcelTableModel;
 
 import edu.scripps.fl.pubchem.xml.PopulateArray;
-import edu.scripps.fl.pubchem.xml.model.Panel;
 import edu.scripps.fl.pubchem.xml.model.PubChemAssay;
 import edu.scripps.fl.pubchem.xml.model.ResultTid;
 import edu.scripps.fl.pubchem.xml.model.Xref;
@@ -32,7 +29,7 @@ public class TestPubChemAssay {
 		ArrayList<PubChemAssay> pubChemAssay = new ArrayList<PubChemAssay>();
 		try{
 			model = ExcelTableModel.load(fileExcel, true);
-			ArrayList<Xref> xrefs = (ArrayList<Xref>) pa.getXrefs(model);
+			Set<Xref> xrefs = (Set<Xref>) pa.getXrefs(model);
 			ArrayList<ResultTid> tids = (ArrayList<ResultTid>) pa.getTidValues(model);
 			model.setUseFirstRowAsColumnHeadings(false);
 			PubChemAssay pca = pa.getAssayValues(model);
@@ -54,7 +51,7 @@ public class TestPubChemAssay {
 		PopulateArray pa = new PopulateArray();
 		ArrayList<PubChemAssay> pubChemAssay = new ArrayList<PubChemAssay>();
 		try{
-			ArrayList<Xref> xrefs = (ArrayList<Xref>) pa.getXrefs(model);
+			Set<Xref> xrefs = (Set<Xref>) pa.getXrefs(model);
 			ArrayList<ResultTid> tids = (ArrayList<ResultTid>) pa.getTidValues(model);
 			model.setUseFirstRowAsColumnHeadings(false);
 			PubChemAssay pca = pa.getAssayValues(model);
@@ -79,7 +76,7 @@ public class TestPubChemAssay {
 		PubChemAssay[] pubChemAssay = new PubChemAssay[1];
 		try{
 			model = ExcelTableModel.load(fileExcel, true);
-			ArrayList<Xref> xrefs = (ArrayList<Xref>) pa.getXrefs(model);
+			Set<Xref> xrefs = (Set<Xref>) pa.getXrefs(model);
 			ArrayList<ResultTid> tids = (ArrayList<ResultTid>) pa.getTidValues(model);
 			model.setUseFirstRowAsColumnHeadings(false);
 			PubChemAssay pca = pa.getAssayValues(model);

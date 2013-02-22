@@ -25,9 +25,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
 import javax.swing.BorderFactory;
@@ -41,6 +43,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import sun.security.util.Debug;
 
 import edu.scripps.fl.pubchem.PubChemDeposition;
 import edu.scripps.fl.pubchem.PubChemFactory;
@@ -60,9 +64,12 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 	private GUIComponent gc = new GUIComponent();
 	private PubChemDeposition pcDep = new PubChemDeposition();
 	private static final Logger log = LoggerFactory.getLogger(PubChemXMLExtractorGUI.class);
+//	isInternal is initially set in SwingGUI
+	private Boolean isInternal;
 	
-	public PubChemXMLExtractorGUI() {
+	public PubChemXMLExtractorGUI(Boolean isInternal) {
 		DOMConfigurator.configure(PubChemXMLExtractorGUI.class.getClassLoader().getResource("log4j.config.xml"));
+		this.isInternal = isInternal;
 		
 		setBorder(BorderFactory.createTitledBorder("PubChem XML Extractor"));
 		setLayout(new GridBagLayout());
@@ -83,7 +90,7 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 		jtfFileXML.addMouseListener(this);
 		jbnFileXML = gc.createJButton("Open16",
 				"Choose a PubChem xml file to extract TID, Panel, and Xref information from or type in a PubChem AID number.", "icon");
-		jbnRunExtractor = gc.createJButton("Extract PubChem XML", "Run the extractor program.", "text");
+		jbnRunExtractor = gc.createJButton("Get Excel Workbook", "Run the extractor program.", "text");
 		jbnCreateReport = gc.createJButton("Create Report", "Create report from XML file.", "text");
 		
 		jbnFileXML.addActionListener(this);
@@ -103,22 +110,25 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 			if (e.getSource() == jbnFileXML)
 				gc.fileChooser(jtfFileXML, "", "open");
 			else if (e.getSource() == jbnRunExtractor) {
-				File fileExcelOutput = extract();
+				URL template = templateForExcel();
+				File fileExcelOutput = extract(template);
 				if(fileExcelOutput != null){
 					log.info("Opening excel file through Desktop: " + fileExcelOutput);
 					Desktop.getDesktop().open(fileExcelOutput);
 				}
 			}
 			else if (e.getSource() == jbnCreateReport){
-				File fileExcelOutput = extract();
+				URL template = getClass().getClassLoader().getResource("ExcelTemplate.xlsx");
+				File fileExcelOutput = extract(template);
 				if(fileExcelOutput != null){
 					log.info("Opening report through Desktop: " + fileExcelOutput);
-					File filePDFOutput = File.createTempFile("PubChem_PDF_Report", ".pdf");
-					File fileWordOutput	= File.createTempFile("PubChem_Word_Report", ".docx");
+					String fileName = FilenameUtils.removeExtension(fileExcelOutput.getAbsolutePath());
+					File filePDFOutput = new File(fileName + ".pdf");
+					File fileWordOutput	= new File(fileName + ".docx");
 					filePDFOutput.deleteOnExit();
 					fileWordOutput.deleteOnExit();
-					new ReportController().createReport(pcDep, fileExcelOutput, filePDFOutput, fileWordOutput);
-					Desktop.getDesktop().open(filePDFOutput);
+					new ReportController().createReport(pcDep, fileExcelOutput, filePDFOutput, fileWordOutput, isInternal);
+					gc.openPDF(isInternal, filePDFOutput, this);
 					Desktop.getDesktop().open(fileWordOutput);
 				}
 			}
@@ -130,9 +140,7 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 		
 	}
 	
-	
-	
-	public File extract() throws Exception{
+	private File extract(URL template) throws Exception{
 		String xml = jtfFileXML.getText();
 		InputStream is = null;
 		if(FilenameUtils.getExtension(xml).equals("xml")){
@@ -149,14 +157,25 @@ public class PubChemXMLExtractorGUI extends JPanel implements ActionListener, Mo
 			if(is == null)
 				is = pcDep.getPubChemAID(aid);
 			}
-		
-		File fileExcelOutput= null;
-		
-		fileExcelOutput = File.createTempFile("pubchem_" + xml + "_", ".xlsx");
-		fileExcelOutput.deleteOnExit();
-		new XMLExtractorController().extractPubChemXML(is, new FileOutputStream(fileExcelOutput));
-
+		File fileExcelOutput = new XMLExtractorController().extractPubChemXML(template, is);
 		return fileExcelOutput;
+	}
+	
+	
+	private URL  templateForExcel(){
+		URL template; 
+		int nn = JOptionPane.showOptionDialog(this, "If you are editing the Excel file, would you like a BAO categorized comments sheet included?", SwingGUI.APP_NAME, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+		String resource =  "ExcelTemplate";
+		if(nn == JOptionPane.YES_OPTION)
+			resource = resource + "_withBAO_EditingVersion";
+			
+		if(isInternal)
+			resource = resource + "_Internal";
+		
+		log.info("Getting resource: " + resource);
+		template = getClass().getClassLoader().getResource(resource + ".xlsx");
+
+		return template;
 	}
 
 	public void mouseClicked(MouseEvent e) {

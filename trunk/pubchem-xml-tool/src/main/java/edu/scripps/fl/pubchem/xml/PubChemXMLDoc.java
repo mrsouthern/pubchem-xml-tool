@@ -44,6 +44,7 @@ public class PubChemXMLDoc {
 	private static final Logger logger = LoggerFactory.getLogger(PubChemXMLDoc.class);
 	
 	private static String  dbTracking = "//PC-AssayDescription_aid-source/PC-Source/PC-Source_db/PC-DBTracking",
+			name = "PC-AssayDescription_name",
 			source = "PC-AssayDescription_aid-source",
 			description = "PC-AssayDescription_description", 
 			protocol = "PC-AssayDescription_protocol", 
@@ -58,7 +59,9 @@ public class PubChemXMLDoc {
 			projectCategory = "PC-AssayDescription_project-category", 
 			isPanel = "PC-AssayDescription_is-panel", 
 			panelInfo = "PC-AssayDescription_panel-info",
+			categorizedComment = "PC-AssayDescription_categorized-comment",
 			rootString = "/PC-AssayContainer/PC-AssaySubmit/PC-AssaySubmit_assay/PC-AssaySubmit_assay_descr/PC-AssayDescription";
+			
 
 	
 	public String getTargetInformation(Document doc, String info) throws Exception{
@@ -82,7 +85,7 @@ public class PubChemXMLDoc {
 		}
 		catch(Exception ex) {
 			logger.error(String.format("Error fetching summary: %s %s", value, db));
-			throw new UnsupportedOperationException("Unable to retrieve text for proteins, genes and targets.");
+			throw new UnsupportedOperationException(String.format("Unable to retrieve text for %s %s. Please remove from worksheet.",db,value));
 		}	
 	}
 
@@ -133,7 +136,9 @@ public class PubChemXMLDoc {
 	
 	public void organizeXMLDoc(Document doc){
 		Element parent = (Element) doc.selectSingleNode(rootString);
-		String[] nodesOrder = {description, protocol, comment, xref, results, revision, target, activityOutcome, dr, grantNumber, projectCategory, isPanel, panelInfo};
+		String[] nodesOrder = {name, description, protocol, comment, xref, results, revision, target, 
+						activityOutcome, dr, grantNumber, projectCategory, isPanel, 
+						panelInfo, categorizedComment};
 		for(String nodeString: nodesOrder){
 			Node node = parent.selectSingleNode(nodeString);
 			if(node != null){

@@ -46,7 +46,7 @@ public class ResultTidXML {
 		for (int ii = 1; ii <= numberPlots; ii++) {
 			Element assayDRAttr = tidPlotDR.addElement("PC-AssayDRAttr");
 			assayDRAttr.addElement("PC-AssayDRAttr_id").addText("" + ii);
-			assayDRAttr.addElement("PC-AssayDRAttr_descr").addText("CR Plot Labels " + ii);
+			assayDRAttr.addElement("PC-AssayDRAttr_descr").addText("Response vs Concentration [" + ii + "]");
 			assayDRAttr.addElement("PC-AssayDRAttr_dn").addText("Concentration");
 			assayDRAttr.addElement("PC-AssayDRAttr_rn").addText("Response");
 		}
@@ -81,6 +81,11 @@ public class ResultTidXML {
 				String tidUnit = tidValue.getTidUnit();
 				if (null != tidUnit & "" != tidUnit & tidUnit != "null" )
 					resultType.addElement("PC-ResultType_unit").addAttribute("value", tidUnit).addText("" + tidValue.getTidUnitValue());
+				
+				Boolean isAC = tidValue.getIsActiveConcentration();
+				if (null != isAC)
+					resultType.addElement("PC-ResultType_ac").addAttribute("value", isAC.toString());
+				
 				Double concentration = tidValue.getTidConcentration();
 				if (null != concentration) {
 					Element tc = resultType.addElement("PC-ResultType_tc");

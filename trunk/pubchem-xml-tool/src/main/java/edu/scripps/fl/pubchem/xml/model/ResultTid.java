@@ -31,6 +31,18 @@ public class ResultTid {
 	private Integer tidPanelNum;
 	private String tidPanelReadout;
 	private Integer tidPanelReadoutValue;
+	private Boolean isActiveConcentration;
+	
+	public ResultTid(){
+		
+	}
+	
+	public ResultTid(String tidName, String tidDescription, String tidType, String tidUnit){
+		setTidName(tidName);
+		setTidDescription(tidDescription);
+		setTidType(tidType);
+		setTidUnit(tidUnit);
+	}
 
 	public Double getTidConcentration() {
 		return tidConcentration;
@@ -101,6 +113,9 @@ public class ResultTid {
 		this.tidPanelReadout = tidPanelReadout.toLowerCase();
 	}
 	public void setTidType(String tidType) {
+		if("Integer".equalsIgnoreCase(tidType))
+			tidType = "int";
+		
 		if ("float".equalsIgnoreCase(tidType))
 			this.tidTypeValue = 1;
 		else if ("int".equalsIgnoreCase(tidType))
@@ -115,6 +130,8 @@ public class ResultTid {
 		this.tidType = tidType.toLowerCase();
 	}
 	public void setTidUnit(String tidUnit) {
+		if("%".equals(tidUnit))
+			tidUnit = "percent";
 
 		if ("ppt".equalsIgnoreCase(tidUnit))
 			this.tidUnitValue = 1;
@@ -168,6 +185,14 @@ public class ResultTid {
 			throw new UnsupportedOperationException("Unknown Result Unit: " + tidUnit);
 
 		this.tidUnit = tidUnit.toLowerCase();
+	}
+
+	public void setIsActiveConcentration(Boolean isActiveConcentration) {
+		this.isActiveConcentration = isActiveConcentration;
+	}
+
+	public Boolean getIsActiveConcentration() {
+		return isActiveConcentration;
 	}
 
 }
