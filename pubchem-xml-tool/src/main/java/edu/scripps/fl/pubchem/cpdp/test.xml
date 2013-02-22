@@ -1,0 +1,424 @@
+<CPDPDocument>
+	<AIDs>
+		<AID create="true">
+			<Information>
+				<Item id="SummaryAID#">2714</Item>
+				<Item id="ProjectUID(CARS)"></Item>
+				<Item id="AssignedAID#"></Item>
+				<Item id="ProjectCategory">MLPCN (Assay Provider)</Item>
+				<Item id="CARSHTSStage">tertiary:late stage</Item>
+				<Item id="ProbeType">antagonist</Item>
+				<Item id="DescriptiveName(AIDtitle)">Luminescence-based cell-based primary high throughput
+					screening assay to identify antagonists of COUP-TFII (NR2F2)</Item>
+				<Item id="ShortName">COUPTFII_INH_LUMI_1536_1X%INH PRUN</Item>
+				<Item id="AssayCenter">The Scripps Research Institute Molecular Screening
+					Center</Item>
+				<Item id="PhenotypicScreen">no</Item>
+				<Item id="Multiplexing">no</Item>
+				<Item id="BSL">bsl 2</Item>
+				<Item id="CompoundScreeningConcentration">5</Item>
+				<Item id="ConcentrationUnits">concentration unit:uM</Item>
+				<Item id="#ConcentrationPoints">10</Item>
+				<Item id="#DilutionFactor">1:3</Item>
+				<Item id="#Replicates">3</Item>
+				<Item id="AssayFormat">Cell based: Lysed Cell</Item>
+				<Item id="CellLine">293</Item>
+				<Item id="AssayType">signal transduction assay:reporter-gene assay</Item>
+				<Item id="AssayMethod">End-point Assay</Item>
+				<Item id="ResultType">concentration endpoint:concentration response
+					endpoint:IC50</Item>
+				<Item id="AssayReadoutContent">single parameter</Item>
+				<Item id="AssayReadoutType">measured value</Item>
+				<Item id="TargetType">Nuclear Receptors</Item>
+				<Item id="TargetDescription">panel</Item>
+				<Item id="AssayDetection">Luminescence Other</Item>
+				<Item id="SignalDirection">signal decrease:signal decrease corresponding to
+					inhibition</Item>
+				<Item id="AssayDetectionMethodType">luminescence method:chemiluminescence</Item>
+				<Item id="AssayDetectionInstrument">PerkinElmer ViewLux</Item>
+				<Item id="ExcitationWavelength"></Item>
+				<Item id="EmissionWavelength"></Item>
+				<Item id="AbsorbanceWavelength"></Item>
+				<Item id="UsedforHitValidation?">yes</Item>
+				<Item id="UsedforSAR?">yes</Item>
+				<Item id="ImplementationStartDate"></Item>
+				<Item id="ValidationStartDate"></Item>
+				<Item id="CriticalReagents">HEK-293T cells
+					pcDNA6.2-COUP-TFII
+					pXP2-168
+				</Item>
+				<Item id="Consumables">Assay plates (PerkinElmer #6007688)
+					OptiMEM (Invitrogen #11058021)
+					X-tremeGENE 9 (Roche Applied Science #06365809001)
+					DMEM (Mediatech Inc. #10-013-CV)
+					BriteLite (PerkinElmer #6007688)
+				</Item>
+				<Item id="Description-AssayPurpose">The purpose of this cell-based assay is to identify
+					compounds that can inhibit COUP-TFII transcriptional activity. The
+					expression vectors for COUP-TFII p(cDNA6.2-COUP-TFII) and the
+					luciferase reporter NGFI-A-Luc (pXP2-168) are transiently
+					cotransfected into HEK-293T cells. COUP-TFII has been shown to
+					efficiently activate NGFI-A-Luc expression (17) and the readout can
+					be measured by a luminometer. Small molecules that inhibit
+					COUP-TFII transcriptional activity will decrease the promoter
+					activity that can be detected by luciferase assay. As designed,
+					compounds that inhibit COUP-TFII activity will decrease luciferase
+					activity, resulting in decreased well luminescence.</Item>
+				<Item id="Description-DetailedProtocols">On Day 1,
+					Transfection mix:
+					In 600 ul of Opti-Mem (invitrogen#11058021), add 27 μl of X-tremeGENE
+					9 (Roche Applied Science, part 06365809001). Incubate for 5 min.
+					Add 9 μg total DNA (4.5 ug pXP2-168 + 4.5 ug pcDNA6.2-COUP-TFII /
+					pcDNA6.2-CAT) to the above mix. Mix it gently and let the mixture
+					sit for at least 20 minutes.
+					During the 2nd incubation of 20 minutes, harvest cells from a 15 cm dish
+					as follows:
+					a) Remove media via vacuum aspiration completely.
+					b) Add 1 ml trypsin-EDTA to the cells and evenly spread over plate.
+					c) Bang the plate with the palm of your hand to dislodge cells from
+					the surface of the plate.
+					d) Allow cells to sit in the tissue culture hood for 3-5 minutes.
+					e) Add 10 ml of 37°C full medium to the plate of cells.
+					f) Pipet up and down 10-15 times with a 10 ml pipet until a single
+					cell suspension is obtained. Try to avoid creating too much froth.
+					g) Count cells in a hemocytometer.
+					Mix 8.5 ml of medium containing 3 x 106 cells with transfection mix in
+					10 cm dish and incubate for overnight in the CO2 incubator.
+					On Day 2,
+					In the morning, harvest the cells as above (0.5 ml trypsin-EDTA) in
+					10 ml of medium and count them. Seed 10,000 cells per 384 well in
+					20 ul of medium.
+					In the afternoon (4 hr after seeding), treat with the compounds
+					diluted in medium (20 ul).
+					On Day 3,
+					Develop with Luciferase reagent by adding 30 ul of Britelite Plus (after
+					16-20 hr of compound treatment).
+				</Item>
+				<Item id="CalculationSummary"></Item>
+				<Item id="Curve-fitequation"></Item>
+				<Item id="Keywords">PRUN, primary, HTS, nuclear hormone receptor, NHR,
+					reporter assay, luciferase, LUMI, COUPTFII, chicken ovalbumin
+					upstream promoter, COUP transcription factor 2, NR2F2, ARP1,
+					COUPTFB, NF-E3, NR2F1, SVP40, TFCOUP2, 1536, Scripps Florida, The
+					Scripps Research Institute Molecular Screening Center, SRIMSC,
+					Molecular Libraries Probe Production Centers Network, MLPCN</Item>
+				<Item id="Comments"></Item>
+				<Item id="AssayCut-offNumber"></Item>
+				<Item id="AssayCut-offQualifier"></Item>
+				<Item id="AssayCut-offUnits"></Item>
+				<Item id="Est.StartDate"></Item>
+				<Item id="Est.Throughput"></Item>
+				<Item id="HoldUntilDate"></Item>
+			</Information>
+			<Targets>
+				<Target>
+					<Item id="TargetType">protein</Item>
+					<Item id="NCBITargetGeneName">NR2F2 nuclear receptor subfamily 2, group F, member 2
+						[ Homo sapiens]</Item>
+					<Item id="NCBITargetGeneID#">7026</Item>
+					<Item id="NCBITargetProteinName">COUP transcription factor 2</Item>
+					<Item id="NCBITargetProteinID#">14149746</Item>
+					<Item id="NCBITargetTaxonomyName">Homo sapiens</Item>
+					<Item id="NCBITargetTaxonomyID#">9606</Item>
+					<Item id="NCBITargetOMIMName">NUCLEAR RECEPTOR SUBFAMILY 2, GROUP F, MEMBER 2;
+						NR2F2</Item>
+					<Item id="NCBITargetOMIM#">107773</Item>
+				</Target>
+				<Target>
+					<Item id="TargetType">protein</Item>
+					<Item id="NCBITargetGeneName">UL48 transactivates immediate early genes [ Human
+						herpesvirus 1 ]</Item>
+					<Item id="NCBITargetGeneID#">2703416</Item>
+					<Item id="NCBITargetProteinName">transactivating tegument protein VP16 [Human
+						herpesvirus 1]</Item>
+					<Item id="NCBITargetProteinID#">9629429</Item>
+					<Item id="NCBITargetTaxonomyName">Human herpesvirus 1</Item>
+					<Item id="NCBITargetTaxonomyID#">10298</Item>
+					<Item id="NCBITargetOMIMName"></Item>
+					<Item id="NCBITargetOMIM#"></Item>
+				</Target>
+			</Targets>
+		</AID>
+		<AID>
+			<Information>
+				<Item id="SummaryAID#"></Item>
+				<Item id="ProjectUID(CARS)"></Item>
+				<Item id="AssignedAID#">2770</Item>
+				<Item id="ProjectCategory">MLPCN (Assay Provider)</Item>
+				<Item id="CARSHTSStage">secondary</Item>
+				<Item id="ProbeType"></Item>
+				<Item id="DescriptiveName(AIDtitle)">Counterscreen for antagonists of COUP-TFII (NR2F2):
+					Luminescence-based cell-based high throughput assay to identify
+					antagonists of the Herpes Virus Virion Protein 16 (VP16</Item>
+				<Item id="ShortName">VP16_INH_LUMI_1536_1X%INH CSRUN</Item>
+				<Item id="AssayCenter">The Scripps Research Institute Molecular Screening
+					Center</Item>
+				<Item id="PhenotypicScreen">no</Item>
+				<Item id="Multiplexing">no</Item>
+				<Item id="BSL">bsl 2</Item>
+				<Item id="CompoundScreeningConcentration">5</Item>
+				<Item id="ConcentrationUnits">concentration unit:uM</Item>
+				<Item id="#ConcentrationPoints">1</Item>
+				<Item id="#DilutionFactor"></Item>
+				<Item id="#Replicates">1</Item>
+				<Item id="AssayFormat">Cell based: Lysed Cell</Item>
+				<Item id="CellLine">293</Item>
+				<Item id="AssayType">signal transduction assay:reporter-gene assay</Item>
+				<Item id="AssayMethod">End-point Assay</Item>
+				<Item id="ResultType">response endpoint:percent response:percent inhibition
+				</Item>
+				<Item id="AssayReadoutContent">single parameter</Item>
+				<Item id="AssayReadoutType">measured value</Item>
+				<Item id="TargetType">Miscellaneous</Item>
+				<Item id="TargetDescription">single target</Item>
+				<Item id="AssayDetection">Luminescence Other</Item>
+				<Item id="SignalDirection">signal decrease:signal decrease corresponding to
+					inhibition</Item>
+				<Item id="AssayDetectionMethodType">luminescence method:chemiluminescence</Item>
+				<Item id="AssayDetectionInstrument">PerkinElmer EnVision</Item>
+				<Item id="ExcitationWavelength"></Item>
+				<Item id="EmissionWavelength"></Item>
+				<Item id="AbsorbanceWavelength"></Item>
+				<Item id="UsedforHitValidation?">yes</Item>
+				<Item id="UsedforSAR?">yes</Item>
+				<Item id="ImplementationStartDate"></Item>
+				<Item id="ValidationStartDate"></Item>
+				<Item id="CriticalReagents">VP16-Gal4 vector
+					TK-UAS-Luc reporter vector
+				</Item>
+				<Item id="Consumables">Assay plates (PerkinElmer #6007688)
+					OptiMEM (Invitrogen #11058021)
+					X-tremeGENE 9 (Roche Applied Science #06365809001)
+					DMEM (Mediatech Inc. #10-013-CV)
+					BriteLite (PerkinElmer #6007688)
+				</Item>
+				<Item id="Description-AssayPurpose">The purpose of this assay is to determine whether the
+					hits identified as active in a set of experiments entitled,
+					Luminescence-based cell-based primary high throughput screening
+					assay to identify antagonists of COUP-TFII (NR2F2) (AID xxx), are
+					assay artifacts affecting luciferase activity, cell viability or
+					the transcription/translation machinery in a non-selective manner.
+				</Item>
+				<Item id="Description-DetailedProtocols"></Item>
+				<Item id="CalculationSummary"></Item>
+				<Item id="Curve-fitequation"></Item>
+				<Item id="Keywords">Counterscreen, CSRUN, Virion Protein 16, VP16, herpes
+					simplex virus, VP-16, lumi, luminescence, HTS, high throughput
+					screen, 1536, Scripps Florida, The Scripps Research Institute
+					Molecular Screening Center, SRIMSC, Molecular Libraries Probe
+					Production Centers Network, MLPCN</Item>
+				<Item id="Comments"></Item>
+				<Item id="AssayCut-offNumber"></Item>
+				<Item id="AssayCut-offQualifier"></Item>
+				<Item id="AssayCut-offUnits"></Item>
+				<Item id="Est.StartDate"></Item>
+				<Item id="Est.Throughput"></Item>
+				<Item id="HoldUntilDate"></Item>
+			</Information>
+			<Targets>
+				<Target>
+					<Item id="TargetType">protein</Item>
+					<Item id="NCBITargetGeneName">UL48 transactivates immediate early genes [ Human
+						herpesvirus 1 ]</Item>
+					<Item id="NCBITargetGeneID#">2703416</Item>
+					<Item id="NCBITargetProteinName">transactivating tegument protein VP16 [Human
+						herpesvirus 1]</Item>
+					<Item id="NCBITargetProteinID#">9629429</Item>
+					<Item id="NCBITargetTaxonomyName">Human herpesvirus 1</Item>
+					<Item id="NCBITargetTaxonomyID#">10298</Item>
+					<Item id="NCBITargetOMIMName"></Item>
+					<Item id="NCBITargetOMIM#"></Item>
+				</Target>
+			</Targets>
+		</AID>
+	</AIDs>
+	<Project>
+		<Information>
+			<Item id="ProjectTitlePhysiological"> Mechanism of Action of COUP-Transcription Factors
+			</Item>
+			<Item id="GrantApplicationNumber"> R01DK45641 </Item>
+			<Item id="SubmitterInstitution"> Baylor College of Medicine </Item>
+			<Item id="ScreeningCenterName">The Scripps Research Institute Molecular Screening
+				Center</Item>
+			<Item id="ChemistryCenterName">The Scripps Research Institute Molecular Screening
+				Center</Item>
+			<Item id="DateProjectAssigned(CARSStartDate)">12/10/2012</Item>
+			<Item id="CPDPKickoffTeleconferenceDate"></Item>
+			<Item id="CPDPChemistryUpdateDateTeleconferenceDate"></Item>
+			<Item id="CPDPTypeChemistry"></Item>
+			<Item id="RevisionNo."></Item>
+		</Information>
+		<Contacts>
+			<Contact id="ScreeningCenterPI">
+				<Name>Hugh Rosen</Name>
+				<Email>hrosen@scripps.edu</Email>
+				<Phone>858-784-2396</Phone>
+			</Contact>
+			<Contact id="ScreeningCenterManager">
+				<Name>Peter Hodder</Name>
+				<Email>hodderp@scripps.edu</Email>
+				<Phone>561-228-2100</Phone>
+			</Contact>
+			<Contact id="ScreeningLead">
+				<Name> Franck Madoux </Name>
+				<Email>fmadoux@scripps.edu     </Email>
+				<Phone> 561-228-2149 </Phone>
+			</Contact>
+			<Contact id="ChemistryCenterPI">
+				<Name> Hugh Rosen </Name>
+				<Email> hrosen@scripps.edu </Email>
+				<Phone> 858-784-2396 </Phone>
+			</Contact>
+			<Contact id="ChemistryCenterManager">
+				<Name> William Roush </Name>
+				<Email> roush@scripps.edu </Email>
+				<Phone> 561-228-2450 </Phone>
+			</Contact>
+			<Contact id="ChemistryLead">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="TechnicalWriter/CARSManager">
+				<Name> Jill Ferguson </Name>
+				<Email> jillferg@scripps.edu </Email>
+				<Phone>858-784-8821 </Phone>
+			</Contact>
+			<Contact id="AssayProvider">
+				<Name> Ming-Jer Tsai </Name>
+				<Email> mtsai@bcm.edu </Email>
+				<Phone> 713-798-6253 </Phone>
+			</Contact>
+			<Contact id="NIHScienceOfficer">
+				<Name> Ron Margolis (NIDDK) </Name>
+				<Email>margolisr@mail.nih.gov </Email>
+				<Phone> 301-594-8819 </Phone>
+			</Contact>
+		</Contacts>
+	</Project>
+	<ProjectDescription>
+		<Paragraph>Steroid receptor chicken ovalbumin upstream
+			promoter-transcription factor II (COUP-TFII) (1), an orphan nuclear
+			receptor and member of the nuclear receptor superfamily, has been
+			shown to be a critical transcriptional regulator in many different
+			cancer types by promoting angiogenesis (2-4), cell proliferation and
+			metastasis (5-11). COUP-TFII has widespread tissue distribution in
+			human; detectable expression has been found in every tissue type
+			examined (12). Currently, the treatment for tumor angiogenesis
+			focuses mainly on blocking VEGFR-2 signaling and has not been
+			effective due to imited efficacy, eventually leading to resistance
+			and/or relapse. COUP-TFII has been shown to promote tumor
+			angiogenesis through modulating multiple angiogenic signals
+			(VEGF/VEGFR-2, Angiopoietin 1/Tie2 and E2F-1) in many different types
+			of cancer (13-14). In addition, COUP-TFII is overexpressed in
+			prostate and several other cancers and is an excellent prognostic
+			marker. By including COUP-TFII data with Cyclin D1, p21, PTEN, and
+			Smad4 data in the prognosis, the prognostic accuracy is improved. The
+			expression level of COUP-TFII and its role in regulating tumor growth
+			and metastasis in prostate cancer has been examined, and these data
+			indicate that COUP-TFII positively promotes prostate tumor growth and
+			metastasis (15). These results provide the rational basis to posit
+			that inhibition of COUP-TFII may offer a novel and broadly
+			efficacious approach for anticancer intervention.
+			COUP-TFII has also been shown to regulate energy storage and expenditure. We
+			have found that COUP-TFII heterozygous mice have increased
+			mitochondrial biogenesis in white adipose tissue, which results in
+			higher energy expenditure, resulting in resistantce to high fat
+			diet-induced obesity and improved glucose homeostasis due to
+			increased insulin sensitivity at peripheral tissues (16). These
+			results indicate that COUP-TFII has an important role in regulating
+			adipocyte differentiation and energy metabolism. Therefore, COUP-TFII
+			inhibitors could potentially serve as agents to improve insulin
+			sensitivity, enhance energy metabolism, and decrease high fat
+			diet-induced obesity.
+		</Paragraph>
+	</ProjectDescription>
+	<References>
+		<Reference>
+			<Text>Sagami, I., Tsai, S. Y., Wang, H., Tsai, M. J., and O'Malley,
+				B. W. (1986) Identification of two factors required for
+				transcription of the ovalbumin gene, Mol Cell Biol 6, 4259-4267.
+			</Text>
+			<PMID>3796602</PMID>
+		</Reference>
+		<Reference>
+			<Text>Hanahan, D., and Weinberg, R. A. (2011) Hallmarks of cancer:
+				the next generation, Cell 144, 646-674.</Text>
+			<PMID>21376230</PMID>
+		</Reference>
+		<Reference>
+			<Text>Lin, F. J., Chen, X., Qin, J., Hong, Y. K., Tsai, M. J., and
+				Tsai, S. Y. (2010) Direct transcriptional regulation of neuropilin-2
+				by COUP-TFII modulates multiple steps in murine lymphatic vessel
+				development, J Clin Invest 120, 1694-1707.</Text>
+			<PMID>20364082</PMID>
+		</Reference>
+		<Reference>
+			<Text>Pereira, F. A., Qiu, Y., Zhou, G., Tsai, M. J., and Tsai, S. Y.
+				(1999) The orphan nuclear receptor COUP-TFII is required for
+				angiogenesis and heart development, Genes Dev 13, 1037-1049.</Text>
+			<PMID>10215630</PMID>
+		</Reference>
+	</References>
+	<Project>
+		<Information>
+			<Item id="ProjectTitlePhysiological"></Item>
+			<Item id="GrantApplicationNumber"></Item>
+			<Item id="SubmitterInstitution"></Item>
+			<Item id="ScreeningCenterName"></Item>
+			<Item id="ChemistryCenterName"></Item>
+			<Item id="DateProjectAssigned(CARSStartDate)"></Item>
+			<Item id="CPDPKickoffTeleconferenceDate"></Item>
+			<Item id="CPDPChemistryUpdateDateTeleconferenceDate"></Item>
+			<Item id="CPDPTypeChemistry"></Item>
+			<Item id="RevisionNo."></Item>
+		</Information>
+		<Contacts>
+			<Contact id="ScreeningCenterPI">
+				<Name>Hugh Rosen</Name>
+				<Email>hrosen@scripps.edu</Email>
+				<Phone>858-784-2396</Phone>
+			</Contact>
+			<Contact id="ScreeningCenterManager">
+				<Name>Peter Hodder</Name>
+				<Email>hodderp@scripps.edu</Email>
+				<Phone>561-228-2100</Phone>
+			</Contact>
+			<Contact id="ScreeningLead">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="ChemistryCenterPI">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="ChemistryCenterManager">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="ChemistryLead">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="TechnicalWriter/CARSManager">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="AssayProvider">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="NIHScienceOfficer">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+		</Contacts>
+	</Project>
+</CPDPDocument>

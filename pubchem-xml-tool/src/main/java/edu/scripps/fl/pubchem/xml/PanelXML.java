@@ -22,6 +22,7 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 
 import edu.scripps.fl.pubchem.xml.model.Panel;
+import edu.scripps.fl.pubchem.xml.model.PanelTarget;
 
 /*
  * @author S Canny (scanny at scripps dot edu)
@@ -55,32 +56,39 @@ public class PanelXML {
 				member.addElement("PC-AssayPanelMember_mid").addText(rr + 1 + "");
 				member.addElement("PC-AssayPanelMember_name").addText(panelValue.getPanelName());
 
-				Integer targetGi = panelValue.getPanelTargetGi();
-				if (null != targetGi) {
+				List<PanelTarget> panelTargets = panelValue.getPanelTarget();
+				if (null != panelTargets && panelTargets.size() > 0) {
 					Element target = member.addElement("PC-AssayPanelMember_target");
-					Element targetInfo = target.addElement("PC-AssayTargetInfo");
-					String name = panelValue.getPanelTargetName();
-					String type = panelValue.getPanelTargetType();
-					targetInfo.addElement("PC-AssayTargetInfo_name").addText(name);
-					targetInfo.addElement("PC-AssayTargetInfo_mol-id").addText("" + targetGi);
-					targetInfo.addElement("PC-AssayTargetInfo_molecule-type").addAttribute("value", type)
-							.addText("" + panelValue.getPanelTargetTypeValue());
-				}
-				Integer taxonomy = panelValue.getPanelTaxonomy();
-				Integer gene = panelValue.getPanelGene();
-				if (null != taxonomy | null != gene) {
-					Element xref = member.addElement("PC-AssayPanelMember_xref");
-					if (null != taxonomy) {
-						Element annotatedXref = xref.addElement("PC-AnnotatedXRef");
-						Element annotatedXref_xref = annotatedXref.addElement("PC-AnnotatedXRef_xref");
-						Element XrefData = annotatedXref_xref.addElement("PC-XRefData");
-						XrefData.addElement("PC-XRefData_taxonomy").addText("" + taxonomy);
+					for(PanelTarget panelTarget: panelTargets){
+						Element targetInfo = target.addElement("PC-AssayTargetInfo");
+						String name = panelTarget.getPanelTargetName();
+						String type = panelTarget.getPanelTargetType();
+						if(name != null)
+							targetInfo.addElement("PC-AssayTargetInfo_name").addText(name);
+						targetInfo.addElement("PC-AssayTargetInfo_mol-id").addText("" + panelTarget.getPanelTargetGi());
+						targetInfo.addElement("PC-AssayTargetInfo_molecule-type").addAttribute("value", type)
+								.addText("" + panelTarget.getPanelTargetTypeValue());
 					}
-					if (null != gene) {
-						Element annotatedXref = xref.addElement("PC-AnnotatedXRef");
-						Element annotatedXref_xref = annotatedXref.addElement("PC-AnnotatedXRef_xref");
-						Element XrefData = annotatedXref_xref.addElement("PC-XRefData");
-						XrefData.addElement("PC-XRefData_gene").addText("" + gene);
+				}
+				List<Integer> taxonomies = panelValue.getPanelTaxonomy();
+				List<Integer> genes = panelValue.getPanelGene();
+				if (null != taxonomies | null != genes) {
+					Element xref = member.addElement("PC-AssayPanelMember_xref");
+					if (null != taxonomies && taxonomies.size() > 0) {
+						for(Integer taxonomy: taxonomies){
+							Element annotatedXref = xref.addElement("PC-AnnotatedXRef");
+							Element annotatedXref_xref = annotatedXref.addElement("PC-AnnotatedXRef_xref");
+							Element XrefData = annotatedXref_xref.addElement("PC-XRefData");
+							XrefData.addElement("PC-XRefData_taxonomy").addText("" + taxonomy);
+						}
+					}
+					if (null != genes && genes.size() > 0) {
+						for(Integer gene: genes){
+							Element annotatedXref = xref.addElement("PC-AnnotatedXRef");
+							Element annotatedXref_xref = annotatedXref.addElement("PC-AnnotatedXRef_xref");
+							Element XrefData = annotatedXref_xref.addElement("PC-XRefData");
+							XrefData.addElement("PC-XRefData_gene").addText("" + gene);
+						}
 					}
 				}
 			}

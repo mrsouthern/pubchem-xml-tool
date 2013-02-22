@@ -3,10 +3,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.scripps</groupId>
 	<artifactId>pubchem-xml-tool</artifactId>
-	<version>20100922</version>
-	<packaging>jar</packaging>
+	<version>20130108</version>
+	<packaging>war</packaging>
+	<!-- reference http://karussell.wordpress.com/2009/05/05/maven-and-webstart-jnlp/ -->
+	<!-- first create keystore with: keytool -genkey -alias timefinder -keystore 
+		timefinder.jks -->
+	<!-- need to execute mvn install webstart:jnlp -->
 	<build>
 		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>webstart-maven-plugin</artifactId>
+				<version>1.0-alpha-1</version>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -14,6 +25,26 @@
 					<configuration>
 						<source>${java.source.version}</source>
 						<target>${java.source.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>webstart-maven-plugin</artifactId>
+					<!-- do not bind to install phase <executions> <execution> <goals> <goal>report</goal> 
+						</goals> </execution> </executions> -->
+					<configuration>
+						<jnlp>
+							<mainClass>edu.scripps.fl.pubchem.xmltool.gui.SwingGUI</mainClass>
+						</jnlp>
+						<sign>
+							<keystore>H:/keystore/scripps.jks</keystore>
+							<keypass>TSRIfl01!</keypass>
+							<storepass>TSRIfl01!</storepass>
+							<storetype>jks</storetype>
+							<alias>scripps</alias>
+							<verify>true</verify>
+						</sign>
+						<verbose>true</verbose>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -114,8 +145,8 @@
 		</dependency>
 		<dependency>
 			<groupId>edu.scripps</groupId>
-			<artifactId>pubchem-deposition</artifactId>
-			<version>20100825</version>
+			<artifactId>PubChemDB-web</artifactId>
+			<version>20120628</version>
 		</dependency>
 	</dependencies>
 	<properties>

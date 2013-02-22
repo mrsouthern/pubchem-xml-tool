@@ -26,17 +26,65 @@ public class Xref {
 	private Object xrefValue;
 	private String xrefComment;
 	private Boolean isTarget;
+	private Boolean isPrimaryCitation;
 	
-	public Object getXrefValue() {
-		return xrefValue;
+
+
+	public Boolean getIsPrimaryCitation() {
+		return isPrimaryCitation;
 	}
 
-	public void setXrefValue(Object xrefValue) {
-		this.xrefValue = xrefValue;
+	public Boolean getIsTarget() {
+		return isTarget;
+	}
+
+	public String getXrefComment() {
+		return xrefComment;
+	}
+
+	public String getXrefTargetType() {
+		return xrefTargetType;
+	}
+
+	public Integer getXrefTargetValue() {
+		return xrefTargetValue;
 	}
 
 	public String getXrefType() {
 		return xrefType;
+	}
+
+	public Object getXrefValue() {
+		return xrefValue;
+	}
+
+	public void setIsPrimaryCitation(Boolean isPrimaryCitation) {
+		this.isPrimaryCitation = isPrimaryCitation;
+	}
+
+	public void setIsTarget(Boolean isTarget) {
+		this.isTarget = isTarget;
+	}
+
+	public void setXrefComment(String xrefComment) {
+		this.xrefComment = xrefComment;
+	}
+
+	public void setXrefTargetType(String xrefTargetType) {
+		this.xrefTargetType = xrefTargetType;
+	}
+
+	public void setXrefTargetValue(Integer xrefTypeValue) {
+		this.xrefTargetValue = xrefTypeValue;
+		if(this.xrefTargetValue == 1)
+			this.xrefType = "protein";
+		else if(this.xrefTargetValue == 2 | this.xrefTargetValue == 3)
+			this.xrefType = "nucleotide";
+		else if(this.xrefTargetValue == 4)
+			this.xrefType = "gene";
+		else if(this.xrefTargetValue == 5)
+			this.xrefType = "biosystems id";
+			
 	}
 
 	public void setXrefType(String xrefType) {
@@ -48,46 +96,15 @@ public class Xref {
 		}
 	}
 
-	public String getXrefComment() {
-		return xrefComment;
-	}
-
-	public void setXrefComment(String xrefComment) {
-		this.xrefComment = xrefComment;
-	}
-
-	public void setIsTarget(Boolean isTarget) {
-		this.isTarget = isTarget;
-	}
-
-	public Boolean getIsTarget() {
-		return isTarget;
-	}
-
-	public void setXrefTargetValue(Integer xrefTypeValue) {
-		this.xrefTargetValue = xrefTypeValue;
-		if(this.xrefTargetValue == 1)
-			this.xrefType = "Protein";
-		else if(this.xrefTargetValue == 2 | this.xrefTargetValue == 3)
-			this.xrefType = "Nucleotide";
-	}
-
-	public Integer getXrefTargetValue() {
-		return xrefTargetValue;
-	}
-
-	public void setXrefTargetType(String xrefTargetType) {
-		this.xrefTargetType = xrefTargetType;
-	}
-
-	public String getXrefTargetType() {
-		return xrefTargetType;
+	public void setXrefValue(Object xrefValue) {
+		this.xrefValue = xrefValue;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((xrefType == null) ? 0 : xrefType.hashCode());
 		result = prime * result + ((xrefValue == null) ? 0 : xrefValue.hashCode());
 		return result;
 	}
@@ -101,6 +118,11 @@ public class Xref {
 		if (getClass() != obj.getClass())
 			return false;
 		Xref other = (Xref) obj;
+		if (xrefType == null) {
+			if (other.xrefType != null)
+				return false;
+		} else if (!xrefType.equals(other.xrefType))
+			return false;
 		if (xrefValue == null) {
 			if (other.xrefValue != null)
 				return false;

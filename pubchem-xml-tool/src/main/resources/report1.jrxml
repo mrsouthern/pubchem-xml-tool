@@ -1,72 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="40" bottomMargin="40">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<style name="table">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
-			<style backcolor="#EFF7FF"/>
-		</conditionalStyle>
-	</style>
-	<style name="table 1">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 2">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
+	<property name="ireport.y" value="114"/>
 	<style name="table 3">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -115,126 +51,6 @@
 			<style backcolor="#EFF7FF"/>
 		</conditionalStyle>
 	</style>
-	<style name="table 5">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
-			<style backcolor="#EFF7FF"/>
-		</conditionalStyle>
-	</style>
-	<style name="table 6">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
-			<style backcolor="#EFF7FF"/>
-		</conditionalStyle>
-	</style>
-	<style name="table 7">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
-			<style backcolor="#EFF7FF"/>
-		</conditionalStyle>
-	</style>
-	<style name="table 8">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
-			<style backcolor="#EFF7FF"/>
-		</conditionalStyle>
-	</style>
-	<style name="table 9">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 9_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 9_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 9_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
-			<style backcolor="#EFF7FF"/>
-		</conditionalStyle>
-	</style>
 	<style name="table 10">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -254,6 +70,15 @@
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 11"/>
+	<style name="table 11_TH" mode="Opaque" backcolor="#F0F8FF"/>
+	<style name="table 11_CH" mode="Opaque" backcolor="#BFE1FF"/>
+	<style name="table 11_TD" mode="Opaque" backcolor="#FFFFFF">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
 			<style backcolor="#EFF7FF"/>
@@ -316,6 +141,35 @@
 			<fieldDescription><![CDATA[id]]></fieldDescription>
 		</field>
 	</subDataset>
+	<subDataset name="Categorized Comments">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="commentTag" class="java.lang.String">
+			<fieldDescription><![CDATA[commentTag]]></fieldDescription>
+		</field>
+		<field name="commentValue" class="java.lang.String">
+			<fieldDescription><![CDATA[commentValue]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="Description">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="_THIS" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Protocol">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="_THIS" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Comment">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="_THIS" class="java.lang.String"/>
+	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\home\\workspaces\\latest\\pubchem-xml-tool\\src\\main\\resources\\"]]></defaultValueExpression>
 	</parameter>
@@ -327,35 +181,86 @@
 	<field name="class" class="java.lang.Class">
 		<fieldDescription><![CDATA[class]]></fieldDescription>
 	</field>
-	<field name="comment" class="java.lang.String">
-		<fieldDescription><![CDATA[comment]]></fieldDescription>
-	</field>
-	<field name="protocol" class="java.lang.String">
-		<fieldDescription><![CDATA[protocol]]></fieldDescription>
-	</field>
-	<field name="resultTids" class="java.util.ArrayList">
-		<fieldDescription><![CDATA[resultTids]]></fieldDescription>
-	</field>
-	<field name="xrefs" class="java.util.ArrayList">
-		<fieldDescription><![CDATA[xrefs]]></fieldDescription>
-	</field>
-	<field name="holdUntilDate" class="java.util.Date">
-		<fieldDescription><![CDATA[holdUntilDate]]></fieldDescription>
-	</field>
-	<field name="description" class="java.lang.String">
-		<fieldDescription><![CDATA[description]]></fieldDescription>
-	</field>
-	<field name="pmids" class="java.util.ArrayList">
-		<fieldDescription><![CDATA[pmids]]></fieldDescription>
-	</field>
-	<field name="aids" class="java.util.ArrayList">
-		<fieldDescription><![CDATA[aids]]></fieldDescription>
+	<field name="activityOutcomeMethodValue" class="java.lang.Integer">
+		<fieldDescription><![CDATA[activityOutcomeMethodValue]]></fieldDescription>
 	</field>
 	<field name="aid" class="java.lang.Integer">
 		<fieldDescription><![CDATA[aid]]></fieldDescription>
 	</field>
+	<field name="projectCategoryValue" class="java.lang.Integer">
+		<fieldDescription><![CDATA[projectCategoryValue]]></fieldDescription>
+	</field>
+	<field name="activityOutcomeMethod" class="java.lang.String">
+		<fieldDescription><![CDATA[activityOutcomeMethod]]></fieldDescription>
+	</field>
+	<field name="externalRegId" class="java.lang.String">
+		<fieldDescription><![CDATA[externalRegId]]></fieldDescription>
+	</field>
+	<field name="grantNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[grantNumber]]></fieldDescription>
+	</field>
+	<field name="message" class="java.lang.String">
+		<fieldDescription><![CDATA[message]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="projectCategory" class="java.lang.String">
+		<fieldDescription><![CDATA[projectCategory]]></fieldDescription>
+	</field>
+	<field name="source" class="java.lang.String">
+		<fieldDescription><![CDATA[source]]></fieldDescription>
+	</field>
+	<field name="holdUntilDate" class="java.util.Date">
+		<fieldDescription><![CDATA[holdUntilDate]]></fieldDescription>
+	</field>
+	<field name="aids" class="java.util.List">
+		<fieldDescription><![CDATA[aids]]></fieldDescription>
+	</field>
+	<field name="categorizedComments" class="java.util.List">
+		<fieldDescription><![CDATA[categorizedComments]]></fieldDescription>
+	</field>
+	<field name="comment" class="java.util.List">
+		<fieldDescription><![CDATA[comment]]></fieldDescription>
+	</field>
+	<field name="description" class="java.util.List">
+		<fieldDescription><![CDATA[description]]></fieldDescription>
+	</field>
+	<field name="genes" class="java.util.List">
+		<fieldDescription><![CDATA[genes]]></fieldDescription>
+	</field>
+	<field name="nonPmidReferences" class="java.util.List">
+		<fieldDescription><![CDATA[nonPmidReferences]]></fieldDescription>
+	</field>
+	<field name="omimIDs" class="java.util.List">
+		<fieldDescription><![CDATA[omimIDs]]></fieldDescription>
+	</field>
+	<field name="panels" class="java.util.List">
+		<fieldDescription><![CDATA[panels]]></fieldDescription>
+	</field>
+	<field name="pmids" class="java.util.List">
+		<fieldDescription><![CDATA[pmids]]></fieldDescription>
+	</field>
+	<field name="protocol" class="java.util.List">
+		<fieldDescription><![CDATA[protocol]]></fieldDescription>
+	</field>
+	<field name="publications" class="java.util.List">
+		<fieldDescription><![CDATA[publications]]></fieldDescription>
+	</field>
+	<field name="resultTids" class="java.util.List">
+		<fieldDescription><![CDATA[resultTids]]></fieldDescription>
+	</field>
 	<field name="targets" class="java.util.List">
 		<fieldDescription><![CDATA[targets]]></fieldDescription>
+	</field>
+	<field name="taxonomyIDs" class="java.util.List">
+		<fieldDescription><![CDATA[taxonomyIDs]]></fieldDescription>
+	</field>
+	<field name="xrefs" class="java.util.List">
+		<fieldDescription><![CDATA[xrefs]]></fieldDescription>
+	</field>
+	<field name="pmidIndices" class="java.util.Map">
+		<fieldDescription><![CDATA[pmidIndices]]></fieldDescription>
 	</field>
 	<variable name="tid" class="java.lang.String" calculation="Count"/>
 	<title>
@@ -371,16 +276,7 @@
 		</band>
 	</title>
 	<detail>
-		<band height="118">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="34" y="88" width="498" height="20">
-					<printWhenExpression><![CDATA[! $F{description}.equals( null ) && ! $F{description}.equals( "" )]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
-			</textField>
+		<band height="57">
 			<textField isBlankWhenNull="true">
 				<reportElement x="106" y="22" width="44" height="18"/>
 				<textElement>
@@ -409,11 +305,43 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{aid}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="34" y="40" width="32" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Name:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="68" y="40" width="466" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="105" y="0" width="430" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{externalRegId}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="34" y="0" width="70" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[External Reg Id:]]></text>
+			</staticText>
+		</band>
+		<band height="70">
 			<line>
-				<reportElement x="34" y="76" width="498" height="1"/>
+				<reportElement x="34" y="39" width="498" height="1"/>
 			</line>
 			<textField>
-				<reportElement x="178" y="58" width="100" height="17">
+				<reportElement x="178" y="18" width="100" height="17">
 					<printWhenExpression><![CDATA[! $P{activeCount}.equals( null )]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -422,7 +350,7 @@
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$P{activeCount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="178" y="40" width="100" height="18">
+				<reportElement x="178" y="0" width="100" height="18">
 					<printWhenExpression><![CDATA[! $P{totalCount}.equals( null )]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -431,25 +359,44 @@
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$P{totalCount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="34" y="40" width="144" height="18"/>
+				<reportElement x="34" y="0" width="142" height="18"/>
 				<textElement>
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Total number of substances tested:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="34" y="58" width="144" height="17"/>
+				<reportElement x="34" y="18" width="142" height="17"/>
 				<textElement>
 					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Total number of active substances:]]></text>
 			</staticText>
+			<componentElement>
+				<reportElement key="table" x="34" y="47" width="90" height="20"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Description">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{description})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="530">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="521" height="12"/>
+								<textElement>
+									<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{_THIS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
 		</band>
-		<band height="54">
-			<printWhenExpression><![CDATA[$F{targets}.size() > 0 && ! $F{targets}.equals( null )]]></printWhenExpression>
+		<band height="51">
+			<printWhenExpression><![CDATA[! $F{targets}.equals( null ) && !$F{targets}.isEmpty()]]></printWhenExpression>
 			<staticText>
-				<reportElement x="35" y="0" width="100" height="20">
-					<printWhenExpression><![CDATA[$F{targets}.size() > 0 && ! $F{targets}.equals( null )]]></printWhenExpression>
+				<reportElement x="33" y="0" width="100" height="20">
+					<printWhenExpression><![CDATA[! $F{targets}.equals( null ) && !$F{targets}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Roman"/>
@@ -457,8 +404,8 @@
 				<text><![CDATA[Target Information:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table 10" style="table 10" x="39" y="20" width="63" height="27">
-					<printWhenExpression><![CDATA[$F{targets}.size() > 0 && ! $F{targets}.equals( null )]]></printWhenExpression>
+				<reportElement key="table 10" style="table 10" x="34" y="20" width="63" height="27">
+					<printWhenExpression><![CDATA[! $F{targets}.equals( null ) && !$F{targets}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Targets">
@@ -498,7 +445,7 @@
 							<textField>
 								<reportElement x="0" y="3" width="70" height="10"/>
 								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Times New Roman" size="8"/>
+									<font fontName="Times New Roman" size="8" pdfFontName="Times-Roman"/>
 								</textElement>
 								<textFieldExpression class="java.lang.Integer"><![CDATA[$F{id}]]></textFieldExpression>
 							</textField>
@@ -567,10 +514,11 @@
 				</jr:table>
 			</componentElement>
 		</band>
-		<band height="53">
+		<band height="51">
+			<printWhenExpression><![CDATA[! $F{aids}.equals( null ) && ! $F{aids}.isEmpty()]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="table 4" style="table 4" x="73" y="20" width="61" height="26" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[$F{aids}.size() > 0 && ! $F{aids}.equals( null )]]></printWhenExpression>
+				<reportElement key="table 4" style="table 4" x="33" y="20" width="61" height="26" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[! $F{aids}.equals( null ) && ! $F{aids}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="AIDs">
@@ -619,8 +567,8 @@
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement x="34" y="0" width="100" height="20">
-					<printWhenExpression><![CDATA[$F{aids}.size() > 0 && ! $F{aids}.equals( null )]]></printWhenExpression>
+				<reportElement x="33" y="0" width="100" height="20">
+					<printWhenExpression><![CDATA[! $F{aids}.equals( null ) && ! $F{aids}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Roman"/>
@@ -628,53 +576,77 @@
 				<text><![CDATA[Related Bioassays:]]></text>
 			</staticText>
 		</band>
-		<band height="44">
-			<printWhenExpression><![CDATA[! $F{protocol}.equals(null) && ! $F{protocol}.equals( "" )]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="34" y="15" width="498" height="20">
-					<printWhenExpression><![CDATA[! $F{protocol}.equals(null) && ! $F{protocol}.equals( "" )]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{protocol}]]></textFieldExpression>
-			</textField>
+		<band height="38">
+			<printWhenExpression><![CDATA[!$F{protocol}.equals( null ) && !$F{protocol}.isEmpty()]]></printWhenExpression>
 			<staticText>
-				<reportElement x="35" y="0" width="100" height="15">
-					<printWhenExpression><![CDATA[! $F{protocol}.equals(null) && ! $F{protocol}.equals( "" )]]></printWhenExpression>
+				<reportElement x="33" y="0" width="100" height="15">
+					<printWhenExpression><![CDATA[! $F{protocol}.equals(null) && !$F{protocol}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Protocol:]]></text>
 			</staticText>
+			<componentElement>
+				<reportElement key="table" x="33" y="15" width="90" height="20">
+					<printWhenExpression><![CDATA[!$F{protocol}.equals( null ) && !$F{protocol}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Protocol">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{protocol})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="523">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="523" height="12"/>
+								<textElement>
+									<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{_THIS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
 		</band>
-		<band height="49">
-			<printWhenExpression><![CDATA[! $F{comment}.equals( null ) && ! $F{comment}.equals("")]]></printWhenExpression>
+		<band height="44">
+			<printWhenExpression><![CDATA[! $F{comment}.equals( null ) && ! $F{comment}.isEmpty()]]></printWhenExpression>
 			<staticText>
-				<reportElement x="35" y="0" width="100" height="20">
-					<printWhenExpression><![CDATA[! $F{comment}.equals( null ) && ! $F{comment}.equals("")]]></printWhenExpression>
+				<reportElement x="34" y="2" width="100" height="20">
+					<printWhenExpression><![CDATA[! $F{comment}.equals( null ) && ! $F{comment}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Comment:]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="35" y="20" width="498" height="20">
-					<printWhenExpression><![CDATA[! $F{comment}.equals( null ) && ! $F{comment}.equals("")]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{comment}]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="78">
-			<printWhenExpression><![CDATA[$F{resultTids}.size() > 0 && ! $F{resultTids}.equals(null)]]></printWhenExpression>
 			<componentElement>
-				<reportElement key="table 3" style="table 3" x="34" y="20" width="61" height="50">
-					<printWhenExpression><![CDATA[$F{resultTids}.size() > 0 && ! $F{resultTids}.equals(null)]]></printWhenExpression>
+				<reportElement key="table" x="34" y="22" width="90" height="20">
+					<printWhenExpression><![CDATA[! $F{comment}.equals( null ) && ! $F{comment}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Comment">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{comment})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="523">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="523" height="12"/>
+								<textElement>
+									<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{_THIS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="73">
+			<printWhenExpression><![CDATA[! $F{resultTids}.equals(null) && !$F{resultTids}.isEmpty()]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="table 3" style="table 3" x="33" y="20" width="61" height="50">
+					<printWhenExpression><![CDATA[! $F{resultTids}.equals(null) && !$F{resultTids}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Result Tids">
@@ -690,7 +662,7 @@
 								<text><![CDATA[Name]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table 3_TD" height="13" rowSpan="1">
+						<jr:detailCell style="table 3_TD" height="15" rowSpan="1">
 							<textField isStretchWithOverflow="true">
 								<reportElement x="8" y="0" width="104" height="12"/>
 								<textElement>
@@ -710,7 +682,7 @@
 								<text><![CDATA[Description]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table 3_TD" height="13" rowSpan="1">
+						<jr:detailCell style="table 3_TD" height="15" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement x="10" y="0" width="290" height="12"/>
 								<textElement>
@@ -730,7 +702,7 @@
 								<text><![CDATA[Type]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table 3_TD" height="13" rowSpan="1">
+						<jr:detailCell style="table 3_TD" height="15" rowSpan="1">
 							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="51" height="12"/>
 								<textElement textAlignment="Center">
@@ -750,7 +722,7 @@
 								<text><![CDATA[Unit]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="table 3_TD" height="13" rowSpan="1">
+						<jr:detailCell style="table 3_TD" height="15" rowSpan="1">
 							<textField isStretchWithOverflow="true">
 								<reportElement x="0" y="0" width="48" height="12"/>
 								<textElement textAlignment="Center">
@@ -763,14 +735,58 @@
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement x="39" y="0" width="100" height="20">
-					<printWhenExpression><![CDATA[$F{resultTids}.size() > 0 && ! $F{resultTids}.equals(null)]]></printWhenExpression>
+				<reportElement x="33" y="0" width="100" height="20">
+					<printWhenExpression><![CDATA[! $F{resultTids}.equals(null) && ! $F{resultTids}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Result Definitions:]]></text>
 			</staticText>
+		</band>
+		<band height="44">
+			<printWhenExpression><![CDATA[! $F{categorizedComments}.equals(null) && !$F{categorizedComments}.isEmpty()]]></printWhenExpression>
+			<staticText>
+				<reportElement x="33" y="0" width="116" height="20">
+					<printWhenExpression><![CDATA[! $F{categorizedComments}.equals(null) && !$F{categorizedComments}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Categorized Comments:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table 11" style="table 11" x="33" y="20" width="61" height="20">
+					<printWhenExpression><![CDATA[! $F{categorizedComments}.equals(null) && ! $F{categorizedComments}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Categorized Comments">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{categorizedComments})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="168">
+						<jr:detailCell style="table 11_TD" height="16" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="158" height="14"/>
+								<textElement>
+									<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{commentTag}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="297">
+						<jr:detailCell style="table 11_TD" height="16" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="282" height="14"/>
+								<textElement>
+									<font fontName="Times New Roman" size="10" pdfFontName="Times-Roman"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$F{commentValue}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
 		</band>
 	</detail>
 </jasperReport>

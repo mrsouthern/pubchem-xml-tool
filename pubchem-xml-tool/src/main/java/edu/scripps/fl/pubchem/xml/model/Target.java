@@ -25,12 +25,13 @@ import edu.scripps.fl.pubchem.EUtilsFactory;
 public class Target {
 	
 	private String type, name, xmlTargetType;
+	
+
 	private Integer id, xmlTargetValue, taxonomy, omim;
 	private Collection<Long> genes, taxonomies, omims;
 	private Gene gene;
 	private boolean isAssayTarget;
 	
-
 
 	public Target(){
 		

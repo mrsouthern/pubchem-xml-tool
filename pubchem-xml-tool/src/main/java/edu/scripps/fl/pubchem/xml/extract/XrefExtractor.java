@@ -27,6 +27,7 @@ import org.dom4j.Node;
 import com.googlecode.exceltablemodel.ExcelTableModel;
 
 import edu.scripps.fl.pubchem.xml.model.Panel;
+import edu.scripps.fl.pubchem.xml.model.PanelTarget;
 import edu.scripps.fl.pubchem.xml.model.Xref;
 
 /*
@@ -43,21 +44,24 @@ public class XrefExtractor {
 					Double idD = Double.parseDouble(xx.getXrefValue().toString());
 					Integer id = idD.intValue();
 					if (type.equalsIgnoreCase("gene")) {
-						Integer gene = yy.getPanelGene();
-						if (gene != null) {
-							if (gene.equals(id))
+						List<Integer> genes = yy.getPanelGene();
+						if (genes != null) {
+							if (genes.contains(id))
 								xrefs.remove(xx);
 						}
 					} else if (type.equalsIgnoreCase("protein") || type.equalsIgnoreCase("nucleotide")) {
-						Integer target = yy.getPanelTargetGi();
-						if (target != null) {
-							if (target.equals(id))
-								xrefs.remove(xx);
+						List<PanelTarget> targets = yy.getPanelTarget();
+						if (targets != null) {
+							for(PanelTarget target: targets){
+								if(target.getPanelTargetGi().equals(id)){
+									xrefs.remove(xx);
+								}
+							}
 						}
 					} else if (type.equalsIgnoreCase("taxonomy")) {
-						Integer taxonomy = yy.getPanelTaxonomy();
-						if (taxonomy != null) {
-							if (taxonomy.equals(id))
+						List<Integer> taxonomies = yy.getPanelTaxonomy();
+						if (taxonomies != null) {
+							if (taxonomies.contains(id))
 								xrefs.remove(xx);
 						}
 					}
@@ -70,20 +74,21 @@ public class XrefExtractor {
 	public void fillXrefExcelTemplate(ExcelTableModel model, List<Xref> xrefs) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		model.setSheet("Xrefs");
 		Map<Integer, String> map = new XMLExtractor().getColumnsMap(model);
-		String[] xrefProperties = {"xrefType", "xrefValue", "xrefComment", "isTarget"};
+		String[] xrefProperties = {"xrefType", "xrefValue", "xrefComment", "isTarget", "isPrimaryCitation"};
 		for (int ii = 0; ii <= xrefs.size() - 1; ii++) {
 			Xref xref = xrefs.get(ii);
 			for (String property : xrefProperties) {
 				for (int jj = 0; jj <= map.size() - 1; jj++) {
-					if (property.equalsIgnoreCase(map.get(jj)))
+					if (property.equalsIgnoreCase(map.get(jj))){
 						model.setValueAt(BeanUtils.getProperty(xref, property), ii , jj);
+					}
 				}
 			}
 		}
 		new XMLExtractor().autoSizeSheet(model);
 	}
 	
-	protected List<Xref> getXrefValuesFromXML(Document doc) throws Exception {
+	public List<Xref> getXrefValuesFromXML(Document doc, List<Panel> panel) throws Exception {
 		List<Xref> xrefs = new ArrayList<Xref>();
 		List<Node> nodes = doc.selectNodes("//PC-AssayDescription_xref/PC-AnnotatedXRef");
 		for(Node nn: nodes) {
@@ -108,6 +113,11 @@ public class XrefExtractor {
 			selectXref(xref, node, "PC-XRefData_biosystem", "Biosystems Id");
 			if(nn.selectSingleNode("PC-AnnotatedXRef_comment") != null)
 				xref.setXrefComment(nn.selectSingleNode("PC-AnnotatedXRef_comment").getText());
+			Node citationNode = nn.selectSingleNode("PC-AnnotatedXRef_type");
+			if(citationNode != null){
+				if(citationNode.getText().equals("1"))
+					xref.setIsPrimaryCitation(true);
+			}
 			xrefs.add(xref);
 		}
 		nodes = doc.selectNodes("//PC-AssayDescription_target/PC-AssayTargetInfo");
@@ -118,7 +128,6 @@ public class XrefExtractor {
 			BeanUtils.setProperty(xref, "isTarget", true);
 			xrefs.add(xref);
 		}
-		List<Panel> panel = new PanelExtractor().getPanelValuesFromXML(doc);
 		if(panel != null)
 			checkXrefAgainstPanel(xrefs, panel);
 		return xrefs;

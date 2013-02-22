@@ -64,8 +64,12 @@ public class XrefXML {
 				addXref(adXref, elementName, tt.getId().toString(), tt.getName());
 			}
 			
-			for(Gene gg: genes)
-				addXref(adXref, "PC-XRefData_gene", gg.getId().toString(), gg.getName());
+			for(Gene gg: genes){
+				if(!gg.getIsTarget())
+					addXref(adXref, "PC-XRefData_gene", gg.getId().toString(), gg.getName());
+				else
+					new TargetXML().addGeneTargetToDocument(document, gg);
+			}
 
 			for (Xref xx : xrefs) {
 				Element annotatedXref = adXref.addElement("PC-AnnotatedXRef");
@@ -108,8 +112,18 @@ public class XrefXML {
 				if (null != comment)
 					annotatedXref.addElement("PC-AnnotatedXRef_comment").addText(comment);
 			}	
-			for(Xref xx: pmids)
-				addXref(adXref, "PC-XRefData_pmid", xx.getXrefValue().toString(), xx.getXrefComment());
+			for(Xref xx: pmids){
+				Element annotatedXref = adXref.addElement("PC-AnnotatedXRef");
+				Element annotatedXrefXref = annotatedXref.addElement("PC-AnnotatedXRef_xref");
+				Element xrefData = annotatedXrefXref.addElement("PC-XRefData");
+				xrefData.addElement("PC-XRefData_pmid").addText(xx.getXrefValue().toString());
+				if (null != xx.getXrefComment())
+					annotatedXref.addElement("PC-AnnotatedXRef_comment").addText(xx.getXrefComment());
+				if(xx.getIsPrimaryCitation() != null){
+					if(xx.getIsPrimaryCitation())
+						new PubChemXMLUtils().attributeAndTextAdd("PC-AnnotatedXRef_type", "pcit", "1", annotatedXref);
+				}
+			}
 		}
 	}
 	

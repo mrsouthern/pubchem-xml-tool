@@ -74,7 +74,7 @@ public class EUtilsFactory {
 				StringBuffer sb = new StringBuffer();
 				sb.append(url).append("?");
 				PostMethod post = new PostMethod(url);
-				List<NameValuePair> data = new ArrayList();
+				List<NameValuePair> data = new ArrayList<NameValuePair>();
 				data.add(new NameValuePair("tool", EUtilsFactory.this.tool));
 				data.add(new NameValuePair("email", EUtilsFactory.this.email));
 				for (int ii = 0; ii < params.length; ii += 2) {
@@ -154,7 +154,7 @@ public class EUtilsFactory {
 		String idStr = document.selectSingleNode("/eLinkResult/LinkSet/IdList/Id").getText();
 		Long id = Long.parseLong(idStr);
 		List<Node> linkSetDbs = document.selectNodes("/eLinkResult/LinkSet/LinkSetDb");
-		ArrayList<Relation> list = new ArrayList();
+		ArrayList<Relation> list = new ArrayList<Relation>();
 		for(Node linkSetDb: linkSetDbs) {
 			String toDb = linkSetDb.selectSingleNode("DbTo").getText();
 			String linkName = linkSetDb.selectSingleNode("LinkName").getText();
@@ -180,8 +180,7 @@ public class EUtilsFactory {
 		Document document = EUtilsFactory.getInstance().getDocument("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi", "dbfrom", fromDb, "db",
 				toDb, "id", "" + id);
 		List<Node> linkSetDbs = document.selectNodes("/eLinkResult/LinkSet/LinkSetDb");
-		Set<Long> relatedIds = new HashSet();
-		int counter = 0;
+		Set<Long> relatedIds = new HashSet<Long>();
 		for (Node linkSetDb : linkSetDbs) {
 			String linkName = linkSetDb.selectSingleNode("LinkName").getText();
 			List<Node> ids = linkSetDb.selectNodes("Link/Id");
