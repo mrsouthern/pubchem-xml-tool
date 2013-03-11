@@ -105,7 +105,7 @@ public class CPDPExtractXRefsFactory {
 
 		String summary = cpdp.selectSingleNode(CPDPExtractUtils.getChosenAIDInfoNodePath(CPDPExtractUtils.SUMMARY_AID)).getText();
 		if (null != summary && !"".equalsIgnoreCase(summary))
-			xrefs.add(newXref("summary", "AID", "Summary"));
+			xrefs.add(newXref(summary, "AID", "Summary"));
 
 		pmidXrefs(cpdp, xrefs);
 
