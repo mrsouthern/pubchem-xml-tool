@@ -1,0 +1,165 @@
+<CPDPDocument>
+	<AIDs>
+		<AID create="true">
+			<Information>
+				<Item id="SummaryAID#">2519</Item>
+				<Item id="ProjectUID(CARS)"></Item>
+				<Item id="AssignedAID#"></Item>
+				<Item id="ProjectCategory">MLPCN</Item>
+				<Item id="CARSHTSStage">primary</Item>
+				<Item id="ProbeType">inhibitor</Item>
+				<Item id="DescriptiveName(AIDtitle)">Inhibition of STAT1</Item>
+				<Item id="ShortName">STAT1_INH</Item>
+				<Item id="AssayCenter">The Scripps Research Institute Molecular Screening
+					Center</Item>
+				<Item id="PhenotypicScreen">no</Item>
+				<Item id="Multiplexing">no</Item>
+				<Item id="BSL">bsl 1</Item>
+				<Item id="CompoundScreeningConcentration">10</Item>
+				<Item id="ConcentrationUnits">concentration unit:unit of molarity:microM</Item>
+				<Item id="#ConcentrationPoints">1</Item>
+				<Item id="#DilutionFactor"></Item>
+				<Item id="#Replicates">1</Item>
+				<Item id="AssayFormat">Biochemical (in vitro)</Item>
+				<Item id="CellLine"></Item>
+				<Item id="AssayType">binding assay:protein-small molecule interaction assay</Item>
+				<Item id="AssayMethod">End-point Assay</Item>
+				<Item id="ResultType">response endpoint:percent response:percent inhibition</Item>
+				<Item id="AssayReadoutContent">single parameter</Item>
+				<Item id="AssayReadoutType">calculated value</Item>
+				<Item id="TargetType"></Item>
+				<Item id="TargetDescription">single target</Item>
+				<Item id="AssayDetection">Chemiluminescence</Item>
+				<Item id="SignalDirection">signal increase:signal increase corresponding to
+					inhibition</Item>
+				<Item id="AssayDetectionMethodType">fluorescence method:fluorescence intensity</Item>
+				<Item id="AssayDetectionInstrument">8453 UV-Visible spectrophotometer</Item>
+				<Item id="ExcitationWavelength">110</Item>
+				<Item id="EmissionWavelength">150</Item>
+				<Item id="AbsorbanceWavelength"></Item>
+				<Item id="UsedforHitValidation?">no</Item>
+				<Item id="UsedforSAR?">yes</Item>
+				<Item id="ImplementationStartDate"></Item>
+				<Item id="ValidationStartDate"></Item>
+				<Item id="CriticalReagents">A
+					B
+					c</Item>
+				<Item id="Consumables">D
+					E
+					F</Item>
+				<Item id="Description-AssayPurpose">To find inhibitors</Item>
+				<Item id="Description-DetailedProtocols">Add compound
+
+					Incubate
+
+					Calculate inhibition
+				</Item>
+				<Item id="CalculationSummary">%_inhibition =</Item>
+				<Item id="Curve-fitEquation"></Item>
+				<Item id="Keywords">Inhibition, STAT1</Item>
+				<Item id="Comments">This assay may have been run in multiple</Item>
+				<Item id="AssayCut-offNumber">35</Item>
+				<Item id="AssayCut-offQualifier">&gt;=</Item>
+				<Item id="AssayCut-offUnits">unit:number:%</Item>
+				<Item id="Est.StartDate"></Item>
+				<Item id="Est.Throughput"></Item>
+				<Item id="HoldUntilDate"></Item>
+			</Information>
+			<Targets>
+				<Target>
+					<Item id="TargetType">protein</Item>
+					<Item id="NCBITargetGeneName"></Item>
+					<Item id="NCBITargetGeneID#">3757</Item>
+					<Item id="NCBITargetProteinName"></Item>
+					<Item id="NCBITargetProteinID#">146048409</Item>
+					<Item id="NCBITargetTaxonomyName"></Item>
+					<Item id="NCBITargetTaxonomyID#">9606</Item>
+					<Item id="NCBITargetOMIMName"></Item>
+					<Item id="NCBITargetOMIM#">152427</Item>
+				</Target>
+			</Targets>
+		</AID>
+	</AIDs>
+	<Project>
+		<Information>
+			<Item id="ProjectTitlePhysiological"></Item>
+			<Item id="GrantApplicationNumber"></Item>
+			<Item id="SubmitterInstitution"></Item>
+			<Item id="ScreeningCenterName"></Item>
+			<Item id="ChemistryCenterName"></Item>
+			<Item id="DateProjectAssigned(CARSStartDate)"></Item>
+			<Item id="CPDPKickoffTeleconferenceDate"></Item>
+			<Item id="CPDPChemistryUpdateDateTeleconferenceDate"></Item>
+			<Item id="CPDPTypeChemistry"></Item>
+			<Item id="RevisionNo."></Item>
+		</Information>
+		<Contacts>
+			<Contact id="ScreeningCenterPI">
+				<Name>Hugh Rosen</Name>
+				<Email>hrosen@scripps.edu</Email>
+				<Phone>858-784-2396</Phone>
+			</Contact>
+			<Contact id="ScreeningCenterManager">
+				<Name>Peter Hodder</Name>
+				<Email>hodderp@scripps.edu</Email>
+				<Phone>561-228-2100</Phone>
+			</Contact>
+			<Contact id="ScreeningLead">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="ChemistryCenterPI">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="ChemistryCenterManager">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="ChemistryLead">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="TechnicalWriter/CARSManager">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="AssayProvider">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+			<Contact id="NIHScienceOfficer">
+				<Name>Click here to enter text.</Name>
+				<Email>Click here to enter text.</Email>
+				<Phone>Click here to enter text.</Phone>
+			</Contact>
+		</Contacts>
+	</Project>
+	<ProjectDescription>
+		<Paragraph>Click here to enter text.</Paragraph>
+	</ProjectDescription>
+	<References>
+		<Reference>
+			<Text>Click here to enter text.</Text>
+			<PMID>Click here to enter text.</PMID>
+		</Reference>
+		<Reference>
+			<Text>Click here to enter text.</Text>
+			<PMID>Click here to enter text.</PMID>
+		</Reference>
+		<Reference>
+			<Text>Click here to enter text.</Text>
+			<PMID>Click here to enter text.</PMID>
+		</Reference>
+		<Reference>
+			<Text>Click here to enter text.</Text>
+			<PMID>Click here to enter text.</PMID>
+		</Reference>
+	</References>
+</CPDPDocument>
