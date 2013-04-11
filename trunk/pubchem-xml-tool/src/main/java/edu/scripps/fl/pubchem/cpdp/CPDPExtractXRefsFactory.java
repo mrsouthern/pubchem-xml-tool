@@ -16,7 +16,7 @@ import edu.scripps.fl.pubchem.xml.model.Xref;
 
 public class CPDPExtractXRefsFactory {
 
-	private static void addTargetXref(String id, String type, String targetType, Set<Xref> xrefs) throws Exception {
+	private static void addTargetXref(String id, String type, String targetType, Set<Xref> xrefs) throws CPDPException {
 		if (null != id && !"".equals(id) && !"na".equalsIgnoreCase(id)) {
 			CPDPExtractUtils.checkId(id, type);
 			Xref targetX = newXref(id, type, "");
@@ -36,7 +36,7 @@ public class CPDPExtractXRefsFactory {
 		return xref;
 	}
 
-	public static Set<Xref> getSummaryXrefs(Document cpdp) throws Exception{
+	public static Set<Xref> getSummaryXrefs(Document cpdp) throws CPDPException{
 		Set<Xref> xrefs = new LinkedHashSet<Xref>();
 
 		xrefs.add(newXref("http://mlpcn.florida.scripps.edu/", "Source Database Homepage", ""));
@@ -97,7 +97,7 @@ public class CPDPExtractXRefsFactory {
 		}
 	}
 
-	public static Set<Xref> getXRefs(Document cpdp, List<Panel> panels) throws Exception {
+	public static Set<Xref> getXRefs(Document cpdp, List<Panel> panels) throws CPDPException {
 		Set<Xref> xrefs = new LinkedHashSet<Xref>();
 		
 
@@ -120,7 +120,7 @@ public class CPDPExtractXRefsFactory {
 			for (Node tt : targets) {
 				String targetType = tt.selectSingleNode(CPDPExtractUtils.getItemNodePath(CPDPExtractUtils.TARGET_TYPE)).getText();
 				if("".equals(targetType))
-					throw new Exception("Target type has not been specified.");
+					throw new CPDPException("Target type has not been specified.");
 				String omimId = tt.selectSingleNode(CPDPExtractUtils.getItemNodePath(CPDPExtractUtils.OMIM_ID)).getText();
 				addTargetXref(omimId, "omim", targetType, xrefs);
 			}
@@ -130,7 +130,7 @@ public class CPDPExtractXRefsFactory {
 		return xrefs;
 	}
 	
-	private static void addTargets(List<Node> targets, Set<Xref> xrefs) throws Exception{
+	private static void addTargets(List<Node> targets, Set<Xref> xrefs) throws CPDPException{
 		for (Node tt : targets) {
 			String targetType = tt.selectSingleNode(CPDPExtractUtils.getItemNodePath(CPDPExtractUtils.TARGET_TYPE)).getText();
 			String proteinId = tt.selectSingleNode(CPDPExtractUtils.getItemNodePath(CPDPExtractUtils.PROTEIN_ID)).getText();

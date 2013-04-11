@@ -43,7 +43,7 @@ public class AssayXML {
 						activityOutcome = "PC-AssayDescription_activity-outcome-method",
 						projectCategory = "PC-AssayDescription_project-category";
 	
-	public void buildAssayDocument(Document document, PubChemAssay assay) throws Exception {
+	public void buildAssayDocument(Document document, PubChemAssay assay) {
 		PubChemXMLUtils utils = new PubChemXMLUtils();
 		
 		Element root = (Element) document.selectSingleNode(rootString);

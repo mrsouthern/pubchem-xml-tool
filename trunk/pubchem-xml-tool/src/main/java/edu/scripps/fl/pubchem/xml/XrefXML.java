@@ -16,6 +16,7 @@
 package edu.scripps.fl.pubchem.xml;
 
 import java.util.List;
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -35,8 +36,8 @@ public class XrefXML {
 	public static String rootString = "/PC-AssayContainer/PC-AssaySubmit/PC-AssaySubmit_assay/PC-AssaySubmit_assay_descr/PC-AssayDescription",
 			xref = "PC-AssayDescription_xref";
 	
-	public void buildXrefDocument(Document document, PubChemAssay assay) throws Exception {
-		List<Xref> xrefs = assay.getXrefs();
+	public void buildXrefDocument(Document document, PubChemAssay assay) throws Exception{
+		Set<Xref> xrefs = assay.getXrefs();
 		PubChemAssayFactory factory = new PubChemAssayFactory();
 		List<Target> targets = factory.removePanelsFromTargets(assay);
 		List<Gene> genes = factory.removePanelsFromGenes(assay);

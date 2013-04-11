@@ -169,13 +169,13 @@ public class CPDPExtractTIDsFactory {
 	}
 	
 	
-	public static List<ResultTid> getTIDs(Document cpdp) throws Exception {
+	public static List<ResultTid> getTIDs(Document cpdp) throws CPDPException{
 
 		List<ResultTid> tids = new ArrayList<ResultTid>();
 
 		String resultType = cpdp.selectSingleNode(CPDPExtractUtils.getChosenAIDInfoNodePath(CPDPExtractUtils.RESULT_TYPE)).getText();
 		if("".equals(resultType))
-			throw new Exception("Result type has not been specified.");
+			throw new CPDPException("Result type has not been specified.");
 
 		Integer replicates = CPDPExtractUtils.parseIntNode(CPDPExtractUtils.getChosenAIDInfoNodePath(CPDPExtractUtils.REPLICATES), cpdp);
 		Integer points = CPDPExtractUtils.parseIntNode(CPDPExtractUtils.getChosenAIDInfoNodePath(CPDPExtractUtils.CONCENTRATION_POINTS), cpdp);
