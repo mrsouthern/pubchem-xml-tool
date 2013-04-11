@@ -12,7 +12,7 @@ import edu.scripps.fl.pubchem.xml.model.PanelTarget;
 
 public class CPDPExtractPanelFactory {
 
-	public static List<Panel> getPanels(Document cpdp) throws Exception {
+	public static List<Panel> getPanels(Document cpdp) throws CPDPException{
 		String targetDescription = cpdp.selectSingleNode(CPDPExtractUtils.getChosenAIDInfoNodePath(CPDPExtractUtils.TARGET_DESCRIPTION)).getText();
 		boolean isPanel = false;
 		if (targetDescription.equalsIgnoreCase("panel"))

@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -33,6 +34,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import edu.scripps.fl.pubchem.EUtilsFactory;
 
@@ -99,7 +101,7 @@ public class PubChemXMLDoc {
 
 	
 	
-	public Document loadPubChemXML(InputStream inputStream) throws Exception{
+	public Document loadPubChemXML(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException {
 		
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		org.w3c.dom.Document doc2 = builder.parse(inputStream);

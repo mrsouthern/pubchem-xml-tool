@@ -29,6 +29,7 @@ public class TargetIterator implements Iterator<Target> {
 		target.setId(Integer.parseInt(node.getText()));
 		
 		target.setName(elem.selectSingleNode("Item[@Name='Title']").getText());
+		target.setTaxonomy(Integer.parseInt(elem.selectSingleNode("Item[@Name='TaxId']").getText()));
 		
 		return target;
 	}

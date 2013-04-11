@@ -116,6 +116,12 @@ public class PubChemAssayFactory {
 		setUpTargets(proteins, processedTargets, "protein");
 		setUpTargets(nucleotides, processedTargets, "nucleotide");
 		assay.setTargets(processedTargets);
+		for(Target target: processedTargets){
+			if(! assay.getTaxonomyIDs().contains(target.getTaxonomy())){
+				Set<Xref> xrefs = assay.getXrefs();
+				xrefs.add(new Xref("taxonomy", target.getTaxonomy().toString(), "", null));
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")

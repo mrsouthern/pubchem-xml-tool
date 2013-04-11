@@ -31,7 +31,7 @@ import java.util.Set;
 public class PubChemAssay extends Assay {
 	private String message = "";
 	private List<ResultTid> resultTids = new ArrayList<ResultTid>();
-	private List<Xref> xrefs = new ArrayList<Xref>();
+	private Set<Xref> xrefs = new HashSet<Xref>();
 	private List<Xref> aids = new ArrayList<Xref>();
 	private List<Xref> pmids = new ArrayList<Xref>();
 	private List<Xref> nonPmidReferences = new ArrayList<Xref>();
@@ -100,7 +100,7 @@ public class PubChemAssay extends Assay {
 		return taxonomyIDs;
 	}
 
-	public List<Xref> getXrefs() {
+	public Set<Xref> getXrefs() {
 		return xrefs;
 	}
 

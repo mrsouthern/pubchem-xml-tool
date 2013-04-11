@@ -64,12 +64,13 @@ public class CPDPXMLProcessServlet extends HttpServlet {
 			InputStream stream = null;
 			for (FileItem item : items) {
 				if (!item.isFormField()) {
+					//cpdp xml
 					log.info("File name: " + item.getName());
-					String streamName = item.getName();
 					stream = item.getInputStream();
 
 				}
 				else {
+					//excel or xml
 					String name = item.getFieldName();
 					String value = item.getString();
 					if ("format".equals(name))
@@ -81,11 +82,11 @@ public class CPDPXMLProcessServlet extends HttpServlet {
 				
 				File file = null;
 				if("xml".equalsIgnoreCase(format)){
-					file = CPDPXMLProcess.createPubChemXMLFile(stream);
+					file = CPDPXMLProcess.createPubChemXMLFile(stream); // get xml file
 					log.info("PubChem XML: " + file.getName());
 				}else{
 //					Desktop.getDesktop().open(CPDPXMLProcess.createExcel(stream));
-					file = CPDPXMLProcess.createExcel(stream);
+					file = CPDPXMLProcess.createExcel(stream); // get excel file
 					log.info("PubChem Excel: " + file.getName());
 				}
 				
@@ -109,6 +110,7 @@ public class CPDPXMLProcessServlet extends HttpServlet {
 			        byte[] byteBuffer = new byte[BUFSIZE];
 			        DataInputStream in = new DataInputStream(new FileInputStream(file));
 			        ServletOutputStream outStream = resp.getOutputStream();
+			        
 			        // reads the file's bytes and writes them to the response stream
 			        while ((in != null) && ((length = in.read(byteBuffer)) != -1))
 			        {

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -28,6 +29,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.dom4j.Document;
 import org.dom4j.Node;
 import org.dom4j.io.DOMReader;
@@ -57,6 +59,7 @@ import edu.scripps.fl.pubchem.xml.model.PubChemAssay;
 import edu.scripps.fl.pubchem.xml.model.ResultTid;
 import edu.scripps.fl.pubchem.xml.model.Xref;
 import edu.scripps.fl.pubchem.xmltool.gui.SwingGUI;
+import edu.scripps.fl.xml.XMLUtils;
 
 public class CPDPXMLProcess {
 
@@ -67,15 +70,8 @@ public class CPDPXMLProcess {
 		Desktop.getDesktop().open(createExcel(is));
 	}
 	
-	private static Document readXMLInputStream(InputStream is) throws SAXException, IOException, ParserConfigurationException{
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder(); 
-		org.w3c.dom.Document doc2 = builder.parse(is);                                       
-		DOMReader reader = new DOMReader();                                                  
-		Document cpdp = reader.read(doc2);
-		return cpdp;
-	}
-	
-	private static PubChemAssay processCPDPXML(Document cpdp) throws Exception{
+	//returns a populated PubChemAssay from CPDP xml
+	public static PubChemAssay processCPDPXML(Document cpdp) throws CPDPException{
 
 		PubChemAssay assay = new PubChemAssay();
 		Set<Xref> xrefs = new LinkedHashSet<Xref>();
@@ -85,8 +81,9 @@ public class CPDPXMLProcess {
 		
 		if(null == cpdp.selectSingleNode("//AIDs/AID[@create='true']")){
 			// assume you want a summary
-			assay = CPDPExtractPCAssayFactory.getSummaryAssay(cpdp);
-			xrefs = CPDPExtractXRefsFactory.getSummaryXrefs(cpdp);
+//			assay = CPDPExtractPCAssayFactory.getSummaryAssay(cpdp);
+//			xrefs = CPDPExtractXRefsFactory.getSummaryXrefs(cpdp);
+			throw new CPDPException("AID to extract was not chosen or marked.");
 		}else{
 			//chosen assay
 			panels = CPDPExtractPanelFactory.getPanels(cpdp);
@@ -98,7 +95,16 @@ public class CPDPXMLProcess {
 			comments = getCategorizedComments(cpdp);
 
 			assay = CPDPExtractPCAssayFactory.getPubChemAssay(cpdp);
-			new PubChemAssayFactory().setUpPubChemAssay(assay, tids, xrefs, panels, comments);
+			
+			try {
+				new PubChemAssayFactory().setUpPubChemAssay(assay, tids, xrefs, panels, comments);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				CPDPException ex = new CPDPException("Unable to set up PubChem Assay: " + e.getMessage());
+				ex.setStackTrace(e.getStackTrace());
+				throw ex;
+			}
 			
 		}
 		return assay;
@@ -115,15 +121,18 @@ public class CPDPXMLProcess {
 	}
 	
 	
-	public static File createPubChemXMLFile(InputStream is) throws Exception{
-		Document cpdp = readXMLInputStream(is);
+	//returns PubChem uploadable XML file for CPDP xml input
+	//see test_CPDP_Doc.xml for an example CPDP xml
+	public static File createPubChemXMLFile(InputStream is) throws SAXException, IOException, ParserConfigurationException, CPDPException{
+		Document cpdp = XMLUtils.readXMLInputStream(is);
 		Document doc = createXML(cpdp);
-		File fileOutput = File.createTempFile("pubchem", ".xml", new File("C:\\home\\temp\\"));
+		File fileOutput = File.createTempFile("pubchem", ".xml");
+		fileOutput.deleteOnExit();
 		new PubChemXMLDoc().write(doc, fileOutput);
 		return fileOutput;
 	}
 	
-	private static Document createXML(Document cpdp) throws Exception{
+	private static Document createXML(Document cpdp) throws CPDPException, IOException, ParserConfigurationException, SAXException {
 		PubChemAssay assay = processCPDPXML(cpdp);
 		PubChemXMLDoc xmldoc = new PubChemXMLDoc();
 		URL url = CPDPXMLProcess.class.getClassLoader().getResource("blank.xml");
@@ -131,37 +140,88 @@ public class CPDPXMLProcess {
 		Document doc = xmldoc.loadPubChemXML(fileTemplate);
 		new AssayXML().buildAssayDocument(doc, assay);
 		new ResultTidXML().buildTidDocument(doc, assay.getResultTids());
-		new XrefXML().buildXrefDocument(doc, assay);
-		new PanelXML().buildPanelDocument(doc, assay.getPanels());
+		try {
+			new XrefXML().buildXrefDocument(doc, assay);
+		}
+		catch (Exception e) {
+			throw setCPDPException(e, "Unable to build XRef section of PubChem XML: ");
+		}
+		try {
+			new PanelXML().buildPanelDocument(doc, assay.getPanels());
+		}
+		catch (Exception e) {
+			throw setCPDPException(e, "Unable to build Panel section of PubChem XML: ");
+		}
+		
 		new CategorizedCommentXML().buildCategorizedCommentDocument(doc, assay.getCategorizedComments());
 		return doc;
 	}
 	
-	public static File createExcel(InputStream is) throws Exception{
-		Document cpdp = readXMLInputStream(is);
-		Document doc = createXML(cpdp);
+	private static CPDPException setCPDPException(Exception e, String message){
+		CPDPException ex = new CPDPException(message +e.getMessage());
+		ex.setStackTrace(e.getStackTrace());
+		return ex;
+	}
+	
+//	Order: CPDP XML -> PubChemAssay object -> PubChem XML -> Excel spreadsheet
+//	PubChem XML Document is the intermediate data form
+//	Going directly from a PubChemAssay object to a Excel spreadsheet has some bugs
+	public static File createExcel(InputStream is) throws SAXException, IOException, ParserConfigurationException, CPDPException, InvalidFormatException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, ParseException{
+		//CPDP XML
+		Document cpdp = XMLUtils.readXMLInputStream(is);
 		
-		ResultTidExtractor rte = new ResultTidExtractor();
-		PanelExtractor pe = new PanelExtractor();
-		XrefExtractor xe = new XrefExtractor();
-		CategorizedCommentExtractor ce = new CategorizedCommentExtractor();
-		AssayExtractor ae = new AssayExtractor();
+		//PubChem XML
+		Document doc = createXML(cpdp);
 		
 		URL template = CPDPXMLProcess.class.getClassLoader().getResource("ExcelTemplate_Internal.xlsx");
 		ExcelTableModel model = ExcelTableModel.load(template.openStream(), true);
 		
+		// Filling TIDs sheet
+		ResultTidExtractor rte = new ResultTidExtractor();
 		rte.fillTidExcelTemplate(model, rte.getTidValuesFromXML(doc));
-		List<Panel> panel = pe.getPanelValuesFromXML(doc);
-		pe.fillPanelExcelTemplate(model, panel);
-		xe.fillXrefExcelTemplate(model, xe.getXrefValuesFromXML(doc, panel));
-		ce.fillCategorizedCommentExcelTemplate(model, ce.getCategorizedCommentsFromXML(doc));
+
+		// Filling Panel sheet
+		PanelExtractor pe = new PanelExtractor();
+		List<Panel> panel;
+		try {
+			panel = pe.getPanelValuesFromXML(doc);
+			pe.fillPanelExcelTemplate(model, panel);
+		}
+		catch (Exception e) {
+			throw setCPDPException(e, "Unable to fill Panel Excel Sheet: ");
+		}
+		
+		// Filling Xrefs sheet
+		XrefExtractor xe = new XrefExtractor();
+		try {
+			xe.fillXrefExcelTemplate(model, xe.getXrefValuesFromXML(doc, panel));
+		}
+		catch (Exception e) {
+			throw setCPDPException(e, "Unable to fill Xrefs Excel Sheet: ");
+		}
+		
+		// Filling Categorized Comments sheet
+		CategorizedCommentExtractor ce = new CategorizedCommentExtractor();
+		try {
+			ce.fillCategorizedCommentExcelTemplate(model, ce.getCategorizedCommentsFromXML(doc));
+		}
+		catch (Exception e) {
+			throw setCPDPException(e, "Unable to fill Categorized Comment Excel Sheet: ");
+		}
+
+		// Fililng Assay sheet
+		AssayExtractor ae = new AssayExtractor();
 		ae.fillAssayExcelTemplate(model, ae.getAssayValuesFromXML(doc));
 		
+		//activity cutoff is not part of PubChemAssay model
+		//so it has to be extracted separately from cpdp xml document
 		model.setSheet("Activity Cutoff");
 		model.setUseFirstRowAsColumnHeadings(false);
 		model.setValueAt(getActivityCutoff(cpdp), 0, 1);
 		
+		//Writing excel model out to file
 		File output = File.createTempFile("AID_", ".xlsx");
+		output.deleteOnExit();
 		OutputStream outputStream = new FileOutputStream(output);
 		model.getWorkbook().write(outputStream);
 		outputStream.close();

@@ -29,6 +29,16 @@ public class Xref {
 	private Boolean isPrimaryCitation;
 	
 
+	public Xref(){
+		
+	}
+	
+	public Xref(String xrefType, String xrefValue, String xrefComment, Boolean isTarget){
+		this.xrefType = xrefType;
+		this.xrefValue = xrefValue;
+		this.xrefComment = xrefComment;
+		this.isTarget = isTarget;
+	}
 
 	public Boolean getIsPrimaryCitation() {
 		return isPrimaryCitation;

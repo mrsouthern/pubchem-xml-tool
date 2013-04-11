@@ -20,6 +20,8 @@ package edu.scripps.fl.pubchem.xml.model;
  */
 public class ResultTid {
 	
+
+
 	private String tidName = "";
 	private String tidDescription = "";
 	private String tidType = "";
@@ -195,4 +197,107 @@ public class ResultTid {
 		return isActiveConcentration;
 	}
 
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((isActiveConcentration == null) ? 0 : isActiveConcentration.hashCode());
+		result = prime * result + ((tidConcentration == null) ? 0 : tidConcentration.hashCode());
+		result = prime * result + ((tidDescription == null) ? 0 : tidDescription.hashCode());
+		result = prime * result + ((tidName == null) ? 0 : tidName.hashCode());
+		result = prime * result + ((tidPanelNum == null) ? 0 : tidPanelNum.hashCode());
+		result = prime * result + ((tidPanelReadout == null) ? 0 : tidPanelReadout.hashCode());
+		result = prime * result + ((tidPanelReadoutValue == null) ? 0 : tidPanelReadoutValue.hashCode());
+		result = prime * result + ((tidPlot == null) ? 0 : tidPlot.hashCode());
+		result = prime * result + ((tidType == null) ? 0 : tidType.hashCode());
+		result = prime * result + ((tidTypeValue == null) ? 0 : tidTypeValue.hashCode());
+		result = prime * result + ((tidUnit == null) ? 0 : tidUnit.hashCode());
+		result = prime * result + ((tidUnitValue == null) ? 0 : tidUnitValue.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ResultTid other = (ResultTid) obj;
+		if (isActiveConcentration == null) {
+			if (other.isActiveConcentration != null)
+				return false;
+		}
+		else if (!isActiveConcentration.equals(other.isActiveConcentration))
+			return false;
+		if (tidConcentration == null) {
+			if (other.tidConcentration != null)
+				return false;
+		}
+		else if (!tidConcentration.equals(other.tidConcentration))
+			return false;
+		if (tidDescription == null) {
+			if (other.tidDescription != null)
+				return false;
+		}
+		else if (!tidDescription.equals(other.tidDescription))
+			return false;
+		if (tidName == null) {
+			if (other.tidName != null)
+				return false;
+		}
+		else if (!tidName.equals(other.tidName))
+			return false;
+		if (tidPanelNum == null) {
+			if (other.tidPanelNum != null)
+				return false;
+		}
+		else if (!tidPanelNum.equals(other.tidPanelNum))
+			return false;
+		if (tidPanelReadout == null) {
+			if (other.tidPanelReadout != null)
+				return false;
+		}
+		else if (!tidPanelReadout.equals(other.tidPanelReadout))
+			return false;
+		if (tidPanelReadoutValue == null) {
+			if (other.tidPanelReadoutValue != null)
+				return false;
+		}
+		else if (!tidPanelReadoutValue.equals(other.tidPanelReadoutValue))
+			return false;
+		if (tidPlot == null) {
+			if (other.tidPlot != null)
+				return false;
+		}
+		else if (!tidPlot.equals(other.tidPlot))
+			return false;
+		if (tidType == null) {
+			if (other.tidType != null)
+				return false;
+		}
+		else if (!tidType.equals(other.tidType))
+			return false;
+		if (tidTypeValue == null) {
+			if (other.tidTypeValue != null)
+				return false;
+		}
+		else if (!tidTypeValue.equals(other.tidTypeValue))
+			return false;
+		if (tidUnit == null) {
+			if (other.tidUnit != null)
+				return false;
+		}
+		else if (!tidUnit.equals(other.tidUnit))
+			return false;
+		if (tidUnitValue == null) {
+			if (other.tidUnitValue != null)
+				return false;
+		}
+		else if (!tidUnitValue.equals(other.tidUnitValue))
+			return false;
+		return true;
+	}
 }
