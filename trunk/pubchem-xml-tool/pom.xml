@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.scripps</groupId>
 	<artifactId>pubchem-xml-tool</artifactId>
-	<version>20130108</version>
+	<version>20130422</version>
 	<packaging>war</packaging>
 	<!-- reference http://karussell.wordpress.com/2009/05/05/maven-and-webstart-jnlp/ -->
 	<!-- first create keystore with: keytool -genkey -alias timefinder -keystore 

@@ -199,7 +199,11 @@ public class CPDPExtractTIDsFactory {
 		
 		if (!resultType.contains("concentration endpoint")) {
 			//Examples: % Inhibition, % Activation
-			responseTIDLogic(concentration, origType, unit, replicates, tids, true, null);
+			if(points != 0 && dilution != 1.0)
+				dilutionSeries(points, concentration, dilution, replicates, tids, origType);
+			else{
+				responseTIDLogic(concentration, origType, unit, replicates, tids, true, null);
+			}
 		}
 		else  {
 			//Examples: IC50, EC50, CC50
@@ -219,24 +223,28 @@ public class CPDPExtractTIDsFactory {
 			tids.addAll(curveFitTIDs());
 			
 			//dilution points
-			for (int ii = 1; ii <= points; ii++) {
-				// what if response is fold change??
-				responseTIDLogic(concentration, doseTerm(origType), "percent", replicates, tids, false,1);
-				concentration = concentration*dilution;
-				
-				//concentration formatting
-				if(concentration < 1 && concentration >= 0.001){
-				   concentration = Double.parseDouble(new Formatter().format("%1.3f", concentration).toString());
-				}else if(concentration < 0.001){
-					concentration =   Double.parseDouble(new Formatter().format("%1.4f", concentration).toString());
-				}else{
-					concentration = Double.parseDouble( new Formatter().format("%1.1f", concentration).toString());
-				}
-			}
+			dilutionSeries(points, concentration, dilution, replicates, tids, origType);
 			
 			
 		}
 		return tids;
+	}
+	
+	private static void dilutionSeries(Integer points, Double concentration, Double dilution, Integer replicates, List<ResultTid> tids, String origType){
+		for (int ii = 1; ii <= points; ii++) {
+			// what if response is fold change??
+			responseTIDLogic(concentration, doseTerm(origType), "percent", replicates, tids, false,1);
+			concentration = concentration*dilution;
+			
+			//concentration formatting
+			if(concentration < 1 && concentration >= 0.001){
+			   concentration = Double.parseDouble(new Formatter().format("%1.3f", concentration).toString());
+			}else if(concentration < 0.001){
+				concentration =   Double.parseDouble(new Formatter().format("%1.4f", concentration).toString());
+			}else{
+				concentration = Double.parseDouble( new Formatter().format("%1.1f", concentration).toString());
+			}
+		}
 	}
 	
 	private static ResultTid panelResultTID(String name, String description, Integer count, String panelReadout) {
@@ -275,6 +283,7 @@ public class CPDPExtractTIDsFactory {
 			for (int ii = 1; ii <= replicates; ii++) {
 				ResultTid replicate = responseTID(concentration, origType, unit);
 				replicate.setTidName(String.format("%s [%s]", replicate.getTidName(), ii));
+				replicate.setTidDescription(String.format("%s replicate [%s]", replicate.getTidDescription(), ii));
 				if (null != plotNum) {
 					replicate.setTidPlot(plotNum);
 				}

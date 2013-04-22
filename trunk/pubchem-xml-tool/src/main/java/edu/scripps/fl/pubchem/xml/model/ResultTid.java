@@ -45,6 +45,15 @@ public class ResultTid {
 		setTidType(tidType);
 		setTidUnit(tidUnit);
 	}
+	
+	public ResultTid(String tidName, String tidDescription, String tidType, String tidUnit, Double tidConcentration, Integer tidPlot){
+		setTidName(tidName);
+		setTidDescription(tidDescription);
+		setTidType(tidType);
+		setTidUnit(tidUnit);
+		setTidConcentration(tidConcentration);
+		setTidPlot(tidPlot);
+	}
 
 	public Double getTidConcentration() {
 		return tidConcentration;
