@@ -148,7 +148,7 @@ public class CPDPExtractUtils {
 	public static void addNodeTextToList(Document cpdp, String node, List<String> list) {
 		List<Node> nodes = cpdp.selectNodes(node);
 		for (Node nn : nodes) {
-			if (null != nn.getText()) {
+			if (null != nn.getText() || "" != nn.getText()) {
 				list.add(nn.getText());
 			}
 		}
